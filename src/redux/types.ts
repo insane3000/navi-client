@@ -1,0 +1,3 @@
+export enum ActionType {
+  SHOW_MENU = "SHOW_MENU ",
+}
