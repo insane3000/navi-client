@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
     -o-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
-    user-select: none;
+    /* user-select: none; */
 
 }
 body{
@@ -32,34 +32,7 @@ body{
     font-size: 8px;
   }
   *{
-    // !Estilos estándar experimentales (Principalmente Firefox)
-    /* scrollbar-color: rgb(50, 50, 50) rgba(0, 0, 0, 0);
-    scrollbar-color: pink;
-    scrollbar-color: #0a0a0a;
-    scrollbar-color: none;
-    
-    scrollbar-width: thin;
-    &::-webkit-scrollbar {
-      width: .5vw;
-      height: .5vw;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: rgb(10, 10, 10);
-      background-color: pink;
-      background-color: #0a0a0a;
-      background: none;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: rgb(49, 49, 49);
-      border-radius: 0.1rem;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background: #3b3b3b;
-      box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
-    }
-    &::-webkit-scrollbar-thumb:active {
-      background-color: rgb(41, 41, 41);
-    } */
+   
   }
 }
 // !Media query a partir de 768px  

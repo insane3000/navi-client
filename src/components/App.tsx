@@ -18,6 +18,10 @@ import FloatMenu from "./organisms/FloatMenu";
 const AppSt = styled.div`
   width: 100%;
   height: 100%;
+  /* background: #e4e4e4;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
   }

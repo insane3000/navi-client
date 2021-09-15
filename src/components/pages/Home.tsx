@@ -1,7 +1,7 @@
 import styled from "styled-components";
 // *Components
-import HomeMenu from "components/organisms/HomeMenu";
-import HomePage from "components/organisms/HomePage";
+import HomeMenu from "components/organisms/HomeLeft";
+import HomePage from "components/organisms/HomeRight";
 // import { Switch, Route } from "react-router-dom";
 
 // *Redux
@@ -14,9 +14,9 @@ import HomePage from "components/organisms/HomePage";
 
 const HomeSt = styled.div`
   width: 100%;
+  /* max-width: 1920px; */
   height: 100%;
   background: #e4e4e4;
-  
 
   // !Estilos para DESKTOP
   @media only screen and (min-width: 568px) {
