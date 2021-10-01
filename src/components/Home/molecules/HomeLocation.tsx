@@ -19,7 +19,6 @@ const HomeLocation = () => {
         width="600"
         height="450"
         aria-hidden="false"
-        loading="lazy"
       ></iframe>
     </HomeLocationSt>
   );

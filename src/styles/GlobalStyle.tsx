@@ -12,11 +12,15 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
 <<<<<<< HEAD
     /* user-select: none; */
+<<<<<<< HEAD
     scroll-behavior: smooth;
 =======
     user-select: none;
 
 >>>>>>> parent of 9f08bfe (right finished)
+=======
+
+>>>>>>> parent of 821f726 (fail mode)
 }
 body{
   background: rgb(0, 0, 0);

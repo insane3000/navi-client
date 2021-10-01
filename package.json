@@ -17,7 +17,6 @@
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
-    "react-scroll": "^1.8.4",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.3.1",
@@ -40,8 +39,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "aws s3 sync build/ s3://navigamescbba.com --acl public-read"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -63,7 +61,6 @@
   },
   "devDependencies": {
     "@types/react-redux": "^7.1.18",
-    "@types/react-scroll": "^1.8.3",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0"
   }

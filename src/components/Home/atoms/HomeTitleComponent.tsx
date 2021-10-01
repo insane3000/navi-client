@@ -12,6 +12,7 @@ const HomeTitleComponentSt = styled.div<PropsSt>`
   flex-direction: column;
   justify-content: center;
   align-items: flex;
+
   .title {
     background: ${(props) => props.bg};
     width: auto;
@@ -32,12 +33,12 @@ const HomeTitleComponentSt = styled.div<PropsSt>`
   .line {
     width: 95%;
     margin-left: 1rem;
-    margin-bottom: .5rem;
+    margin-bottom: 1rem;
     font-family: "Roboto 300";
     font-weight: 300;
     color: #000000;
-    font-size: 1rem;
-    line-height: 1rem;
+    font-size: 1.3rem;
+    line-height: 1.3rem;
   }
 
   // !Estilos para DESKTOP
@@ -48,14 +49,12 @@ const HomeTitleComponentSt = styled.div<PropsSt>`
       font-size: 3rem;
     }
     .line {
-      margin-bottom: 1rem;
       font-size: 2rem;
       line-height: 2rem;
     }
   }
 `;
 interface Props {
-  id:string
   title: string;
   bgTitle: string;
   color: string;
@@ -64,7 +63,7 @@ interface Props {
 }
 const HomeTitleComponent = (props: Props) => {
   return (
-    <HomeTitleComponentSt bg={props.bgTitle} color={props.color} id={props.id}>
+    <HomeTitleComponentSt bg={props.bgTitle} color={props.color}>
       <h2 className="title">{props.title}</h2>
       <p className="line">{props.line01}</p>
       <p className="line">{props.line02}</p>

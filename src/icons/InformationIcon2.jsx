@@ -1,22 +1,21 @@
 import * as React from "react"
 
-function SvgComponent(props: React.SVGProps<SVGSVGElement>) {
+function SvgComponent(props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
+      width={24}
+      height={24}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="prefix__feather prefix__feather-lock"
+      className="prefix__feather prefix__feather-alert-octagon"
       {...props}
     >
-      <rect x={3} y={11} width={18} height={11} rx={2} ry={2} />
-      <path d="M7 11V7a5 5 0 0110 0v4" />
+      <path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2zM12 8v4M12 16h.01" />
     </svg>
   )
 }

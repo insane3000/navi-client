@@ -72,7 +72,7 @@ const HomeProduct = (props: Props) => {
       <img
         className="imgProduct"
         src={props.img}
-        alt="Imagen de un producto de navi"
+        alt="product image"
         loading="lazy"
       />
       <div className="data">

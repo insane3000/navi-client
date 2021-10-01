@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 // *Components
-import HomeIntro from "components/molecules/HomeIntro";
-import HomePoints from "components/molecules/HomePoints";
-import HomeTitleComponent from "components/atoms/HomeTitleComponent";
+// import HomeIntro from "components/molecules/HomeIntro";
+// import HomePoints from "components/molecules/HomePoints";
+import HomeTitleComponent from "components/Home/atoms/HomeTitleComponent";
 const HomePageSt = styled.div`
   background: #e4e4e4;
   /* overflow-x: hidden; */
@@ -15,7 +15,7 @@ const HomePageSt = styled.div`
 const HomePage = () => {
   return (
     <HomePageSt>
-      <HomeIntro />
+      {/* <HomeIntro />
       <HomeTitleComponent
         title="CANJEA TUS PUNTOS!"
         bgTitle="#ff0040"
@@ -47,7 +47,7 @@ const HomePage = () => {
         line01="Calle Jordan entre 16 de julio y antezana Nº723 acera norte. Planta baja del instituto INAP."
         line02="Abrimos de 7:30 am a 10:00 pm. Y lechu los fines de semana... :D "
       />
-      <HomePoints />
+      <HomePoints /> */}
     </HomePageSt>
   );
 };

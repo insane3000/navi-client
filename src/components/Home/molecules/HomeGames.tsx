@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Games } from "json/games";
+// import { Games } from "json/games";
 const HomeGamesSt = styled.div`
   width: 100%;
   height: auto;
@@ -10,6 +10,7 @@ const HomeGamesSt = styled.div`
   gap: 1rem;
   justify-content: center;
   align-content: center;
+
   img {
     height: 100%;
     width: 100%;
@@ -30,7 +31,7 @@ interface Props {
 const HomeGames = (props: Props) => {
   return (
     <HomeGamesSt>
-      {Games.map((i) => (
+      {/* {Games.map((i) => (
         <img
           key={i.title}
           src={i.img}
@@ -38,7 +39,7 @@ const HomeGames = (props: Props) => {
           alt={i.title}
           loading="lazy"
         />
-      ))}
+      ))} */}
     </HomeGamesSt>
   );
 };
