@@ -21,7 +21,7 @@ const HomeTitleComponentSt = styled.div<PropsSt>`
     justify-content: center;
     align-items: center;
     color: ${(props) => props.color};
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
     margin: 1rem;
     font-family: "Roboto 900";
     font-size: 6vw;
