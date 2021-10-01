@@ -1,10 +1,11 @@
-import PromoBanner from "components/atoms/PromoBanner";
+import PromoBanner from "components/Home/atoms/PromoBanner";
 import React from "react";
 import styled from "styled-components";
 // *Images
 import angel from "img/promos/angel.jpg";
 import fortnite from "img/promos/fortnite.jpg";
 import pubg from "img/promos/pubg.jpg";
+// import overwatch from "img/promos/overwatch.jpg";
 const HomePromoSt = styled.div`
   width: 100%;
   height: auto;
@@ -40,7 +41,7 @@ const HomePromo = () => {
           "linear-gradient(0deg, #ff0074 0%, rgba(224, 253, 45, 0) 62%)"
         }
         title={"PROMO DOMINGO"}
-        line01={"Aprovecha los domingos para comprar tu boleto..."}
+        line01={"Aprovecha los domingos..."}
         line02={"Por 50Bs, obtienes 60bs y 12 puntos."}
       />
       <PromoBanner
@@ -52,6 +53,15 @@ const HomePromo = () => {
         line01={"¿NECESITAS MAS TIEMPO Y MEJOR PRECIO?"}
         line02={"Crea tu cuenta INMORTAL, la hora es mas económica."}
       />
+      {/* <PromoBanner
+        img={overwatch}
+        gradient={
+          "linear-gradient(0deg, #ae00ff 0%, rgba(224, 253, 45, 0) 62%)"
+        }
+        title={"CUENTA INMORTAL"}
+        line01={"¿NECESITAS MAS TIEMPO Y MEJOR PRECIO?"}
+        line02={"Crea tu cuenta INMORTAL, la hora es mas económica."}
+      /> */}
     </HomePromoSt>
   );
 };

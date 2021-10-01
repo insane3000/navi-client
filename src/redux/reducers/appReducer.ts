@@ -13,7 +13,6 @@ const appReducer = (state = initialState, action: ActionsInterface) => {
         ...state,
         showMenu: action.payload,
       };
-
     default:
       return state;
   }

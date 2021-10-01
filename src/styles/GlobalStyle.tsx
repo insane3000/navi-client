@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     -ms-box-sizing: border-box;
     box-sizing: border-box;
     /* user-select: none; */
-
+    scroll-behavior: smooth;
 }
 body{
   background: rgb(0, 0, 0);

@@ -1,4 +1,4 @@
-import HomeProduct from "components/atoms/HomeProduct";
+import HomeProduct from "components/Home/atoms/HomeProduct";
 import React from "react";
 import styled from "styled-components";
 import { Products } from "json/products";
@@ -11,7 +11,6 @@ const HomePointsSt = styled.div`
   gap: 1rem;
   justify-content: center;
   align-content: center;
-
   // !Estilos para DESKTOP
   @media only screen and (min-width: 568px) {
     grid-template-columns: 23% 23% 23% 23%;

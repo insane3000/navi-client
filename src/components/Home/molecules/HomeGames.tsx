@@ -10,7 +10,6 @@ const HomeGamesSt = styled.div`
   gap: 1rem;
   justify-content: center;
   align-content: center;
-
   img {
     height: 100%;
     width: 100%;

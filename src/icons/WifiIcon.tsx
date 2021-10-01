@@ -1,21 +1,21 @@
 import * as React from "react"
 
-function SvgComponent(props) {
+function SvgComponent(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
+      width="1em"
+      height="1em"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="prefix__feather prefix__feather-x"
+      className="prefix__feather prefix__feather-wifi"
       {...props}
     >
-      <path d="M18 6L6 18M6 6l12 12" />
+      <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" />
     </svg>
   )
 }
