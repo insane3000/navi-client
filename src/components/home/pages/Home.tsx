@@ -1,7 +1,7 @@
 import styled from "styled-components";
 // *Components
-import HomeMenu from "components/organisms/HomeLeft";
-import HomePage from "components/organisms/HomeRight";
+import HomeMenu from "components/home/organisms/HomeLeft";
+import HomePage from "components/home/organisms/HomeRight";
 // import { Switch, Route } from "react-router-dom";
 
 // *Redux

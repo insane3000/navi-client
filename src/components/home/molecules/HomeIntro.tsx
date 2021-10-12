@@ -74,10 +74,7 @@ const HomeIntro = () => {
       </div>
       <div className="introData">
         <h2>Navi Games Cbba</h2>
-        <h3>
-          Juega desde <span>2Bs</span> la hora. <br /> Con tu cuenta{" "}
-          <span>Inmortal.</span>
-        </h3>
+        <h3>Un lugar tranquilo para jugar...</h3>
       </div>
     </HomeIntroSt>
   );

@@ -72,7 +72,7 @@ const HomeProduct = (props: Props) => {
       <img
         className="imgProduct"
         src={props.img}
-        alt="product image"
+        alt="product"
         loading="lazy"
       />
       <div className="data">

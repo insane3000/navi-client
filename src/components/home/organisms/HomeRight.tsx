@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 // *Components
-import HomeIntro from "components/molecules/HomeIntro";
-import HomePoints from "components/molecules/HomePoints";
-import HomeTitleComponent from "components/atoms/HomeTitleComponent";
-import HomeLocation from "components/molecules/HomeLocation";
-import HomeGames from "components/molecules/HomeGames";
-import HomePromo from "components/molecules/HomePromo";
+import HomeIntro from "components/home/molecules/HomeIntro";
+import HomePoints from "components/home/molecules/HomePoints";
+import HomeTitleComponent from "components/home/atoms/HomeTitleComponent";
+import HomeLocation from "components/home/molecules/HomeLocation";
+import HomeGames from "components/home/molecules/HomeGames";
+import HomePromo from "components/home/molecules/HomePromo";
 const HomePageSt = styled.div`
   background: #e4e4e4;
   /* overflow-x: hidden; */

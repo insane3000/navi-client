@@ -10,7 +10,11 @@ const GlobalStyle = createGlobalStyle`
     -o-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
+
     /* user-select: none; */
+    scroll-behavior: smooth;
+    user-select: none;
+
 
 }
 body{
@@ -32,7 +36,47 @@ body{
     font-size: 8px;
   }
   *{
-   
+    // Chrome
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        //Firefox:
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+        input[type="number"]:hover,
+        input[type="number"]:focus {
+          -moz-appearance: number-input;
+        }
+        //Other
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+    // !Firefox
+      scrollbar-width: thin;
+    // !Chrome
+    &::-webkit-scrollbar {
+      width: .5rem;
+      height: .5rem;
+    }
+    &::-webkit-scrollbar-track {
+      background: none;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgb(49, 49, 49);
+      border-radius: 0.1rem;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: #3b3b3b;
+      box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    }
+    &::-webkit-scrollbar-thumb:active {
+      background-color: rgb(41, 41, 41);
+    }
   }
 }
 // !Media query a partir de 768px  

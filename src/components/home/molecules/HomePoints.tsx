@@ -1,4 +1,4 @@
-import HomeProduct from "components/atoms/HomeProduct";
+import HomeProduct from "components/home/atoms/HomeProduct";
 import React from "react";
 import styled from "styled-components";
 import { Products } from "json/products";

@@ -3,7 +3,7 @@ import styled from "styled-components";
 // import { NavLink } from "react-router-dom";
 // *Icons
 import CloseIcon from "icons/CloseIcon";
-import InformationIcon from "icons/InformationIcon";
+// import InformationIcon from "icons/InformationIcon";
 
 // *Images
 import NaviLogo from "img/logo-navi.png";
@@ -13,8 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { showMenu } from "redux/actions/appAction";
 //* INTERFACE APP
 import { StoreInterface } from "interfaces/storeTemplate";
-import NavLinkComponent from "components/atoms/NavLinkComponent";
-import { NavLink } from "react-router-dom";
+import NavLinkComponent from "components/home/atoms/NavLinkComponent";
+// import { NavLink } from "react-router-dom";
 // import { section } from "react-router-dom";
 const FloatMenuSt = styled.div`
   width: 100vw;
