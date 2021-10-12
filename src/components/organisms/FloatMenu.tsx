@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showMenu } from "redux/actions/appAction";
 //* INTERFACE APP
 import { StoreInterface } from "interfaces/storeTemplate";
-import NavLinkComponent from "components/Home/atoms/NavLinkComponent";
+import NavLinkComponent from "components/atoms/NavLinkComponent";
 import { NavLink } from "react-router-dom";
 // import { section } from "react-router-dom";
 const FloatMenuSt = styled.div`

@@ -8,12 +8,12 @@ import { showMenu } from "redux/actions/appAction";
 //* INTERFACE APP
 import { StoreInterface } from "interfaces/storeTemplate";
 // *Components
-import Home from "components/Home/pages/Home";
-import Error404 from "components/Error404";
-// import Menu from "./organisms/Menu";
+import Home from "./pages/Home";
+import Error404 from "./pages/Error404";
+import Menu from "./organisms/Menu";
 // *Fonts
 import "fonts/fonts.css";
-// import FloatMenu from "./organisms/FloatMenu";
+import FloatMenu from "./organisms/FloatMenu";
 
 const AppSt = styled.div`
   width: 100%;
@@ -41,7 +41,7 @@ function App() {
           <Route component={Error404} />
         </Switch>
       </AppSt>
-      {/* {app.showMenu && <FloatMenu />} */}
+      {app.showMenu && <FloatMenu />}
     </Router>
   );
 }

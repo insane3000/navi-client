@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 // *Components
-// import HomeIntro from "components/molecules/HomeIntro";
-// import HomePoints from "components/molecules/HomePoints";
-import HomeTitleComponent from "components/Home/atoms/HomeTitleComponent";
+import HomeIntro from "components/molecules/HomeIntro";
+import HomePoints from "components/molecules/HomePoints";
+import HomeTitleComponent from "components/atoms/HomeTitleComponent";
+import HomeLocation from "components/molecules/HomeLocation";
+import HomeGames from "components/molecules/HomeGames";
+import HomePromo from "components/molecules/HomePromo";
 const HomePageSt = styled.div`
   background: #e4e4e4;
   /* overflow-x: hidden; */
@@ -15,7 +18,7 @@ const HomePageSt = styled.div`
 const HomePage = () => {
   return (
     <HomePageSt>
-      {/* <HomeIntro />
+      <HomeIntro />
       <HomeTitleComponent
         title="CANJEA TUS PUNTOS!"
         bgTitle="#ff0040"
@@ -31,7 +34,7 @@ const HomePage = () => {
         line01="A continuación te mostramos los juegos más populares de Navi Games Cbba."
         line02="Si alguno no está actualizado, con solo notificar al que atiende tu juego estará actualizado en cuestión de minutos."
       />
-      <HomePoints />
+      <HomeGames img={""} />
       <HomeTitleComponent
         title="NUESTRAS PROMOCIONES"
         bgTitle="#0099ff"
@@ -39,7 +42,7 @@ const HomePage = () => {
         line01="No tienes que perderte de nuestras promociones!"
         line02="A continuación te mostramos algunas..."
       />
-      <HomePoints />
+      <HomePromo />
       <HomeTitleComponent
         title="NUESTRA UBICACIÓN"
         bgTitle="#ffbb00"
@@ -47,7 +50,7 @@ const HomePage = () => {
         line01="Calle Jordan entre 16 de julio y antezana Nº723 acera norte. Planta baja del instituto INAP."
         line02="Abrimos de 7:30 am a 10:00 pm. Y lechu los fines de semana... :D "
       />
-      <HomePoints /> */}
+      <HomeLocation />
     </HomePageSt>
   );
 };

@@ -1,4 +1,4 @@
-import PromoBanner from "components/Home/atoms/PromoBanner";
+import PromoBanner from "components/atoms/PromoBanner";
 import React from "react";
 import styled from "styled-components";
 // *Images
