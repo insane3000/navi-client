@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
+//* Redux
+import { useSelector } from "react-redux";
 const ChartsSt = styled.div`
   width: 100%;
   height: 100%;
@@ -42,10 +44,14 @@ const ChartsSt = styled.div`
 
 const Charts = () => {
   const [state, setState] = useState();
-
+  const app = useSelector((store) => store.app);
   const fetchData = () => {
     axios
-      .get("http://192.168.0.148:5000/cash-register")
+      .get("http://192.168.0.148:5000/cash-register", {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response) {
         setState(response.data);
       })
@@ -113,6 +119,7 @@ const Charts = () => {
   // console.log(sales);
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const data = {

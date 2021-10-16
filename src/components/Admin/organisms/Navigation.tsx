@@ -1,6 +1,9 @@
+import { StoreInterface } from "interfaces/storeTemplate";
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { useHistory } from "react-router";
 
 const NavigationSt = styled.nav`
   width: 100%;
@@ -8,7 +11,7 @@ const NavigationSt = styled.nav`
   display: grid;
   grid-template-columns: repeat(auto-fit, 2.5rem);
   grid-auto-rows: 2.5rem;
-  gap: 0.5rem;
+  gap: 0.2rem;
   justify-content: center;
   align-content: center;
   background: #0c0c0c;
@@ -56,58 +59,97 @@ const NavigationSt = styled.nav`
   }
 `;
 const Navigation = () => {
+  const history = useHistory();
+  const app = useSelector((store: StoreInterface) => store.app);
+  const reloadPage = (e: any) => {
+    history.push(`/admin`);
+    window.location.reload();
+  };
   return (
     <NavigationSt>
-      <NavLink
-        className="navLink"
-        activeClassName="activeNavLink"
-        to="/admin/add-product"
-      >
-        Add Product
-      </NavLink>
+      {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/add-product"
+        >
+          Add Product
+        </NavLink>
+      ) : null}
+      {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/products"
+        >
+          Products
+        </NavLink>
+      ) : null}
 
-      <NavLink
-        className="navLink"
-        activeClassName="activeNavLink"
-        to="/admin/products"
-      >
-        Products
-      </NavLink>
-      <NavLink
-        className="navLink"
-        activeClassName="activeNavLink"
-        to="/admin/cash-register"
-      >
-        Caja
-      </NavLink>
-      <NavLink
-        className="navLink"
-        activeClassName="activeNavLink"
-        to="/admin/reports"
-      >
-        Reports
-      </NavLink>
-      <NavLink
-        className="navLink"
-        activeClassName="activeNavLink"
-        to="/admin/charts"
-      >
-        Charts
-      </NavLink>
-      <NavLink
-        className="navLink"
-        activeClassName="activeNavLink"
-        to="/admin/users"
-      >
-        Servers
-      </NavLink>
-      <NavLink
-        className="navLink"
-        // activeClassName="activeNavLink"
-        to="/"
-      >
-        Salir
-      </NavLink>
+      {app.login.user !== "" ? (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/reports"
+        >
+          Reportes
+        </NavLink>
+      ) : null}
+
+      {app.login.user !== "" ? (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/cash-register"
+        >
+          Caja
+        </NavLink>
+      ) : null}
+      {app.login.user !== "" ? (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/charts"
+        >
+          Charts 01
+        </NavLink>
+      ) : null}
+      {app.login.user !== "" ? (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/charts02"
+        >
+          Charts 02
+        </NavLink>
+      ) : null}
+      {app.login.user !== "" ? (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/users"
+        >
+          Servers
+        </NavLink>
+      ) : null}
+      {app.login.user === "" ? (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/login"
+        >
+          Entrar
+        </NavLink>
+      ) : (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/login"
+          onClick={reloadPage}
+        >
+          Salir
+        </NavLink>
+      )}
     </NavigationSt>
   );
 };

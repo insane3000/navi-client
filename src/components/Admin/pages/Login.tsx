@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+// import axios from "axios";
+// *Redux
+import { useDispatch } from "react-redux";
+import { loginServer } from "redux/actions/appAction";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { StoreInterface } from "interfaces/storeTemplate";
-// import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
-// *Icons
-// import CloseIcon from "icons/CloseIcon";
+//* INTERFACE APP
+// import { StoreInterface } from "interfaces/storeTemplate";
+
 const AddProductsSt = styled.form`
   width: 100%;
   height: 100%;
@@ -169,118 +171,69 @@ const AddProductsSt = styled.form`
     }
   }
 `;
-interface ProductIT {
+interface LoginIT {
   [key: string]: string | number;
-  //_id: string;
-  name: string;
-  cost: number;
-  price: number;
-  previousServer: number;
-  load: number;
-  currentServer: number;
-  sales: number;
-  cash: number;
+  user: string;
+  password: string;
 }
-const productTemplate = {
-  //_id: "",
-  name: "",
-  cost: 0,
-  price: 0,
-  previousServer: 0,
-  load: 0,
-  currentServer: 0,
-  sales: 0,
-  cash: 0,
+const loginTemplate = {
+  user: "",
+  password: "",
 };
-// interface Props {
-//   fetchData: () => Promise<void>;
-// }
+
 const AddProducts = () => {
   const history = useHistory();
-  const app = useSelector((store: StoreInterface) => store.app);
-  const [addProducts, setAddProducts] = useState<ProductIT>(productTemplate);
-  // console.log(addProducts);
+  const dispatch = useDispatch();
+  // const app = useSelector((store: StoreInterface) => store.app);
+  const [login, setLogin] = useState<LoginIT>(loginTemplate);
   const handleAddProducts = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
-    const type = e.target.type;
-    setAddProducts({
-      ...addProducts,
-      [name]: type === "text" ? value : parseFloat(value),
+    setLogin({
+      ...login,
+      [name]: value,
     });
   };
-  if (app.login.user === "") {
-    history.push(`/admin`);
-    window.location.reload();
-  }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
-      .post("http://192.168.0.148:5000/products", addProducts, {
-        headers: {
-          authorization: `Bearer ${app.login.token}`,
-        },
-      })
-      .then(function (response) {
-        console.log(response);
+      .post("http://192.168.0.148:5000/login", login)
+      .then(function (response: any) {
+        dispatch(loginServer(response.data._id, response.data.token));
+        history.push(`/admin/cash-register`);
+        // console.log(response.data)
       })
       .catch(function (error) {
         console.log(error);
       });
-    setAddProducts(productTemplate);
-    // props.fetchData();
+    // console.log(login);
   };
-
   return (
     <AddProductsSt onSubmit={handleSubmit}>
-      {/* <Link className="close" to="/admin/products">
-        <CloseIcon />
-      </Link> */}
-      <h2 className="titleAddProducts">Agregar Productos</h2>
+      <h2 className="titleAddProducts">Identificate</h2>
       <input
         className="inputValue"
         type="text"
-        name="name"
-        placeholder="Nombre del producto."
+        name="user"
+        placeholder="Nombre de usuario."
         onChange={handleAddProducts}
-        value={addProducts.name}
+        value={login.user}
         onFocus={(e) => e.target.select()}
         required
       />
       <input
         className="inputValue"
-        type="number"
-        name="cost"
-        placeholder="Costo."
+        type="password"
+        name="password"
+        placeholder="Contraseña."
         onChange={handleAddProducts}
-        value={addProducts.cost === 0 ? "" : addProducts.cost}
+        value={login.password}
         onFocus={(e) => e.target.select()}
         required
       />
-      <input
-        className="inputValue"
-        type="number"
-        name="price"
-        placeholder="Precio."
-        onChange={handleAddProducts}
-        value={addProducts.price === 0 ? "" : addProducts.price}
-        onFocus={(e) => e.target.select()}
-        required
-        step="0.1"
-      />
-      {/* <input
-        className="inputValue"
-        type="number"
-        name="stock"
-        placeholder="Stock."
-        onChange={handleAddProducts}
-        value={addProducts.stock === 0 ? "" : addProducts.stock}
-        onFocus={(e) => e.target.select()}
 
-        // required
-      /> */}
       <button className="btnSubmit" type="submit">
-        Guardar
+        Entrar
       </button>
     </AddProductsSt>
   );

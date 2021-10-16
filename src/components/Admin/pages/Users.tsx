@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 // *Interface
 import { CashRegisterIT, cashRegisterTemplate } from "interfaces/Cashregister";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { useSelector } from "react-redux";
 const UsersSt = styled.div`
   width: 100%;
   height: 100%;
@@ -458,10 +460,11 @@ const DashboardSt = styled.form`
 `;
 type StateIT = [CashRegisterIT];
 const Users = () => {
+  const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState<StateIT>([cashRegisterTemplate]);
   const [nameState, setNameState] = useState("ninguno");
   const [initialDate, setInitialDate] = useState(
-    `${new Date().toISOString().substring(0, 11)}00:00`
+    `${new Date().toISOString().substring(0, 11)}10:00`
   );
   const [endingDate, setEndingDate] = useState(
     `${new Date().toISOString().substring(0, 11)}23:59`
@@ -495,7 +498,11 @@ const Users = () => {
 
   const fetchData = () => {
     axios
-      .get("http://192.168.0.148:5000/cash-register")
+      .get("http://192.168.0.148:5000/cash-register", {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         setState(response.data);
       })
@@ -506,6 +513,7 @@ const Users = () => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const options: Intl.DateTimeFormatOptions = {
@@ -567,8 +575,6 @@ const Users = () => {
             <option value="jhasmy">jhasmy</option>
             <option value="zero">zero</option>
             <option value="perro">perro</option>
-            <option value="server dia">Server dia</option>
-            <option value="server noche">Server noche</option>
           </select>
         </section>
         <section className="cellDashboard none">

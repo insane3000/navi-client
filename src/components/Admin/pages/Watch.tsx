@@ -15,6 +15,8 @@ import {
 import axios from "axios";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { useSelector } from "react-redux";
 
 const CashRegisterMainSt = styled.div`
   width: 100%;
@@ -223,7 +225,6 @@ const DashboardSt = styled.form`
         font-size: 1.5rem;
         width: 100%;
         cursor: pointer;
-        text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.8);
 
         &:active {
           background: #230075;
@@ -505,7 +506,7 @@ interface Params {
 const CashRegisterMain = () => {
   const params = useParams<Params>();
   let history = useHistory();
-  // const app = useSelector((store: StoreInterface) => store.app);
+  const app = useSelector((store: StoreInterface) => store.app);
   // const today = new Date();
   const options: Intl.DateTimeFormatOptions = {
     weekday: "short",
@@ -517,6 +518,7 @@ const CashRegisterMain = () => {
     createdAt: "",
     updatedAt: "",
     lastRecord: "",
+
     dashboard: {
       //_id: "",
       date: "",
@@ -537,6 +539,7 @@ const CashRegisterMain = () => {
         load: 0,
         currentServer: 0,
         sales: 0,
+        profit: 0,
         cash: 0,
       },
     ],
@@ -713,7 +716,7 @@ const CashRegisterMain = () => {
   ) => {
     const value = e.target.value;
     const type = e.target.type;
-    console.log(value, type);
+    // console.log(value, type);
     setState({
       ...state,
       dashboard: {
@@ -728,7 +731,11 @@ const CashRegisterMain = () => {
     const fetchData = async (id: string) => {
       if (id) {
         await axios
-          .get(`http://192.168.0.148:5000/cash-register/${id}`)
+          .get(`http://192.168.0.148:5000/cash-register/${id}`, {
+            headers: {
+              authorization: `Bearer ${app.login.token}`,
+            },
+          })
           .then(function (response: any) {
             // console.log(response);
             if (response.data) {
@@ -759,7 +766,11 @@ const CashRegisterMain = () => {
 
     // ! Ogteniendo id del anterior registro
     await axios
-      .get(`http://192.168.0.148:5000/cash-register/${params.id}`)
+      .get(`http://192.168.0.148:5000/cash-register/${params.id}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         letSales = response.data;
         fetchData(response.data.lastRecord);
@@ -767,7 +778,7 @@ const CashRegisterMain = () => {
       .catch(function (error) {
         console.log(error);
       });
-  }, [params.id]);
+  }, [params.id, app.login.token]);
   // !Set state whit data from API
   useEffect(() => {
     fetchProducts();
@@ -779,7 +790,11 @@ const CashRegisterMain = () => {
     e.preventDefault();
 
     await axios
-      .put(`http://192.168.0.148:5000/cash-register/${params.id}`, state)
+      .put(`http://192.168.0.148:5000/cash-register/${params.id}`, state, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response) {
         // setState(state);
         console.log(response);

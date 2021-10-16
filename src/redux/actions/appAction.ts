@@ -10,5 +10,13 @@ export const showMenu =
       payload: data,
     });
   };
-
-
+// !Seteando LOGIN
+export const loginServer =
+  (user: string, token: string) => (dispatch: Dispatch<ActionsInterface>) => {
+    // console.log(data);
+    dispatch({
+      type: ActionType.LOGIN,
+      user,
+      token,
+    });
+  };

@@ -3,6 +3,7 @@ export interface CashRegisterIT {
   createdAt: string;
   updatedAt: string;
   lastRecord: string;
+
   dashboard: {
     // [key: string]: string | number;
     //_id: string;
@@ -24,6 +25,7 @@ export interface CashRegisterIT {
     load: number;
     currentServer: number;
     sales: number;
+    profit: number;
     cash: number;
   }[];
   expenses: {
@@ -38,6 +40,7 @@ export const cashRegisterTemplate: CashRegisterIT = {
   createdAt: "",
   updatedAt: "",
   lastRecord: "",
+
   dashboard: {
     //_id: "",
     date: "",
@@ -58,6 +61,7 @@ export const cashRegisterTemplate: CashRegisterIT = {
       load: 0,
       currentServer: 0,
       sales: 0,
+      profit: 0,
       cash: 0,
     },
     // {
@@ -358,6 +362,7 @@ export const cashRegisterBasic: CashRegisterIT = {
   createdAt: "",
   updatedAt: "",
   lastRecord: "",
+
   dashboard: {
     //_id: "",
     date: "",
@@ -378,6 +383,7 @@ export const cashRegisterBasic: CashRegisterIT = {
       load: 0,
       currentServer: 0,
       sales: 0,
+      profit: 0,
       cash: 0,
     },
   ],

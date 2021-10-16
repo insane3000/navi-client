@@ -1,5 +1,7 @@
 import axios from "axios";
+import { StoreInterface } from "interfaces/storeTemplate";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 // import AddProducts from "./AddProducts";
@@ -170,10 +172,16 @@ type ProductIT = [
 ];
 const ListProducts = () => {
   const history = useHistory();
+  const app = useSelector((store: StoreInterface) => store.app);
+
   const [products, setProducts] = useState<ProductIT>();
   const fetchData = async () => {
     await axios
-      .get("http://192.168.0.148:5000/products")
+      .get("http://192.168.0.148:5000/products", {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         setProducts(response.data);
       })
@@ -183,7 +191,11 @@ const ListProducts = () => {
   };
   const handleDelete = async (_id: string) => {
     await axios
-      .delete(`http://192.168.0.148:5000/products/${_id}`)
+      .delete(`http://192.168.0.148:5000/products/${_id}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then((response) => console.log(response))
       .catch(function (error) {
         console.log(error);
@@ -195,6 +207,7 @@ const ListProducts = () => {
   };
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -13,7 +13,11 @@ const appReducer = (state = initialState, action: ActionsInterface) => {
         ...state,
         showMenu: action.payload,
       };
-
+    case ActionType.LOGIN:
+      return {
+        ...state,
+        login: { ...state.login, user: action.user, token: action.token },
+      };
     default:
       return state;
   }

@@ -1,10 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router";
 // *Interface
 import { CashRegisterIT } from "interfaces/Cashregister";
 // import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+//* Redux
+import { StoreInterface } from "interfaces/storeTemplate";
+import { useSelector } from "react-redux";
 const ReportsSt = styled.div`
   width: 100%;
   height: 100%;
@@ -169,7 +173,9 @@ const ReportsSt = styled.div`
 `;
 type StateIT = [CashRegisterIT];
 const Reports = () => {
-  // let history = useHistory();
+  const history = useHistory();
+  const app = useSelector((store: StoreInterface) => store.app);
+
   const [state, setState] = useState<StateIT>();
   // console.log(state);
   // console.log(history);
@@ -184,21 +190,31 @@ const Reports = () => {
   ) => {
     // console.log(e.target);
     axios
-      .delete(`http://192.168.0.148:5000/cash-register/${id}`)
+      .delete(`http://192.168.0.148:5000/cash-register/${id}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(() => fetchData());
   };
   const fetchData = () => {
     axios
-      .get("http://192.168.0.148:5000/cash-register")
+      .get("http://192.168.0.148:5000/cash-register", {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         setState(response.data);
       })
       .catch(function (error) {
         console.log(error);
+        history.push(`/admin/login`);
       });
   };
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // const today = new Date();
   const options: Intl.DateTimeFormatOptions = {
@@ -249,15 +265,24 @@ const Reports = () => {
             <Link className="cell action" to={`/admin/watch/${i._id}`}>
               Ver
             </Link>
-            <Link className="cell action" to={`/admin/check/${i._id}`}>
-              Editar
-            </Link>
-            <section
-              className="cell action"
-              onClick={(e) => handleDelete(e, i._id)}
-            >
-              Borrar
-            </section>
+            {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+              <Link className="cell action" to={`/admin/check/${i._id}`}>
+                Editar
+              </Link>
+            ) : (
+              <span className="cell">-</span>
+            )}
+
+            {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+              <section
+                className="cell action"
+                onClick={(e) => handleDelete(e, i._id)}
+              >
+                Borrar
+              </section>
+            ) : (
+              <span className="cell">-</span>
+            )}
           </div>
         ))}
       </div>

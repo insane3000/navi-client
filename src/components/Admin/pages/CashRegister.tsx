@@ -14,6 +14,8 @@ import {
 // *Icons
 // import BackupIcon from "icons/BackupIcon";
 import axios from "axios";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { useSelector } from "react-redux";
 // import CashRegister from "../pages/CashRegister";
 
 const CashRegisterMainSt = styled.div`
@@ -143,7 +145,7 @@ const DashboardSt = styled.form`
       font-size: 0.6rem;
       width: 80%;
       cursor: pointer;
-      text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8);
+      /* text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8); */
       padding: 0.5rem;
 
       &:active {
@@ -222,7 +224,7 @@ const DashboardSt = styled.form`
         font-size: 1.5rem;
         width: 100%;
         cursor: pointer;
-        text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.8);
+        /* text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.8); */
 
         &:active {
           background: #230075;
@@ -248,7 +250,7 @@ const SalesSt = styled.div`
   border-right: 0.0625rem solid #333333;
   .tRow {
     display: grid;
-    grid-template-columns: 20% 10% 20% 10% 20%  calc(20% - 1rem);
+    grid-template-columns: 20% 10% 20% 10% 20% calc(20% - 1rem);
     grid-template-rows: 100%;
     column-gap: 0.2rem;
     justify-content: center;
@@ -310,7 +312,7 @@ const SalesSt = styled.div`
     border-right: 0.0625rem solid #333333;
     .tRow {
       display: grid;
-      grid-template-columns: 15% 10% 15% 15% 15% 15% calc(15% - 1.7rem);
+      grid-template-columns: calc(20% - 1.7rem) 15% 15% 15% 15% 10% 10%;
       grid-template-rows: 100%;
       column-gap: 0.2rem;
       justify-content: center;
@@ -500,7 +502,8 @@ const ExpensesSt = styled.div`
 `;
 
 const CashRegisterMain = () => {
-  // const app = useSelector((store: StoreInterface) => store.app);
+  const app = useSelector((store: StoreInterface) => store.app);
+  // console.log(app);
   const today = new Date();
   const options: Intl.DateTimeFormatOptions = {
     weekday: "short",
@@ -513,9 +516,15 @@ const CashRegisterMain = () => {
   // !Calculamos las ventas y el dinero de las ventas
   state.sales.map((i) => {
     i.sales = i.load + i.previousServer - i.currentServer;
+    i.profit = i.sales * (i.price - i.cost);
     i.cash = i.sales * i.price;
     return i;
   });
+  // // !Calculamos las ganancias
+  // state.sales.map((i) => {
+  //   i.profit = i.sales * (i.price - i.cost);
+  //   return i;
+  // });
   // !Sacamos el resultado de las ventas totales
   if (state.sales.length > 0) {
     state.dashboard.totalSales = state.sales
@@ -576,7 +585,7 @@ const CashRegisterMain = () => {
   ) => {
     const value = e.target.value;
     const type = e.target.type;
-    console.log(value, type);
+    // console.log(value, type);
     setState({
       ...state,
       dashboard: {
@@ -591,7 +600,11 @@ const CashRegisterMain = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
-      .post("http://192.168.0.148:5000/cash-register", state)
+      .post("http://192.168.0.148:5000/cash-register", state,{
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function () {
         fetchProducts();
       })
@@ -603,6 +616,7 @@ const CashRegisterMain = () => {
     createdAt: "",
     updatedAt: "",
     lastRecord: "",
+
     dashboard: {
       //_id: "",
       date: "",
@@ -731,12 +745,16 @@ const CashRegisterMain = () => {
       },
     ],
   };
-  // !Set state whit data from redux
 
+  // !Set state whit data from redux
   const fetchProducts = useCallback(async () => {
     const fetchData = async (id: string) => {
       await axios
-        .get(`http://192.168.0.148:5000/cash-register/${id}`)
+        .get(`http://192.168.0.148:5000/cash-register/${id}`, {
+          headers: {
+            authorization: `Bearer ${app.login.token}`,
+          },
+        })
         .then(function (response: any) {
           // console.log(response.data);
           // console.log(response.data);
@@ -758,6 +776,7 @@ const CashRegisterMain = () => {
           setState({
             ...state,
             sales: letSales,
+            // login: { ...state.login, user: app.login.user },
             dashboard: cashRegisterReset.dashboard,
             expenses: cashRegisterReset.expenses,
             lastRecord: id,
@@ -769,8 +788,13 @@ const CashRegisterMain = () => {
     };
     let letSales: any = [];
     // let id: "";
+
     await axios
-      .get("http://192.168.0.148:5000/products")
+      .get("http://192.168.0.148:5000/products", {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         letSales = response.data;
       })
@@ -779,7 +803,11 @@ const CashRegisterMain = () => {
       });
     // ! Ogteniendo id del anterior registro
     await axios
-      .get("http://192.168.0.148:5000/cash-register-one")
+      .get("http://192.168.0.148:5000/cash-register-one", {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         // id = response.data[0]._id;
         fetchData(response.data[0]._id);
@@ -787,7 +815,12 @@ const CashRegisterMain = () => {
       .catch(function (error) {
         console.log(error);
       });
-  }, [state, cashRegisterReset.dashboard, cashRegisterReset.expenses]);
+  }, [
+    state,
+    cashRegisterReset.dashboard,
+    cashRegisterReset.expenses,
+    app.login.token
+  ]);
 
   useEffect(() => {
     fetchProducts();
@@ -908,6 +941,7 @@ const CashRegisterMain = () => {
             <section className="cell head">Carga</section>
             <section className="cell head">Server Actual</section>
             <section className="cell head ">Ventas</section>
+            {/* <section className="cell head ">Ganancias</section> */}
             <section className="cell head none">Efectivo</section>
           </div>
 
@@ -947,7 +981,12 @@ const CashRegisterMain = () => {
               >
                 {i.sales === 0 ? "" : i.sales}
               </section>
-              <section className="cell none">{i.cash === 0 ? "" : i.cash}</section>
+              {/* <section className="cell none">
+                {i.profit === 0 ? "" : i.profit.toFixed(2)}
+              </section> */}
+              <section className="cell none">
+                {i.cash === 0 ? "" : i.cash}
+              </section>
             </div>
           ))}
         </SalesSt>

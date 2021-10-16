@@ -1,5 +1,4 @@
 import Error404 from "components/Error404";
-import React from "react";
 import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 // *Components
@@ -10,11 +9,14 @@ import Reports from "./pages/Reports";
 import Check from "components/Admin/pages/Check";
 import Watch from "components/Admin/pages/Watch";
 import Charts from "./pages/Charts";
+import Charts02 from "./pages/Charts02";
 import Users from "./pages/Users";
-import Video from "./pages/Video";
 import AddProducts from "./pages/AddProducts";
+import Login from "./pages/Login";
 import ListProducts from "./pages/ListProducts";
 import UpdateProducts from "./organisms/UpdateProduct";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { useSelector } from "react-redux";
 const AdminSt = styled.div`
   width: 100%;
   height: 100%;
@@ -44,22 +46,44 @@ const AdminSt = styled.div`
 // `;
 
 const Admin = () => {
+  const app = useSelector((store: StoreInterface) => store.app);
   return (
     <AdminSt id="admin">
       {/* <MobileSt>Voltea tu celular.</MobileSt> */}
       <Navigation />
       <Switch>
-        <Route path="/admin" exact component={CashRegister} />
-        <Route path="/admin/add-product/" component={AddProducts} />
-        <Route path="/admin/video" component={Video} />
-        <Route path="/admin/products" component={ListProducts} />
-        <Route path="/admin/update-product/:id" component={UpdateProducts} />
-        <Route path="/admin/cash-register" component={CashRegister} />
-        <Route path="/admin/reports" component={Reports} />
-        <Route path="/admin/charts/" component={Charts} />
-        <Route path="/admin/users/" component={Users} />
-        <Route path="/admin/check/:id" component={Check} />
-        <Route path="/admin/watch/:id" component={Watch} />
+        <Route path="/admin" exact component={Login} />
+        <Route path="/admin/login" exact component={Login} />
+        {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+          <Route path="/admin/add-product/" component={AddProducts} />
+        ) : null}
+        {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+          <Route path="/admin/products" component={ListProducts} />
+        ) : null}
+        {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+          <Route path="/admin/update-product/:id" component={UpdateProducts} />
+        ) : null}
+        {app.login.user !== "" ? (
+          <Route path="/admin/cash-register" component={CashRegister} />
+        ) : null}
+        {app.login.user !== "" ? (
+          <Route path="/admin/reports" component={Reports} />
+        ) : null}
+        {app.login.user !== "" ? (
+          <Route path="/admin/charts/" component={Charts} />
+        ) : null}
+        {app.login.user !== "" ? (
+          <Route path="/admin/charts02/" component={Charts02} />
+        ) : null}
+        {app.login.user !== "" ? (
+          <Route path="/admin/users/" component={Users} />
+        ) : null}
+        {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+          <Route path="/admin/check/:id" component={Check} />
+        ) : null}
+        {app.login.user !== "" ? (
+          <Route path="/admin/watch/:id" component={Watch} />
+        ) : null}
         <Route component={Error404} />
       </Switch>
     </AdminSt>
