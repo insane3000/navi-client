@@ -4,6 +4,8 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 //* Redux
 import { useSelector } from "react-redux";
+// *Axios
+import { URI } from "config/axios";
 const ChartsSt = styled.div`
   width: 100%;
   height: 100%;
@@ -47,7 +49,7 @@ const Charts = () => {
   const app = useSelector((store) => store.app);
   const fetchData = () => {
     axios
-      .get("http://192.168.0.148:5000/cash-register", {
+      .get(`${URI}/cash-register`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },

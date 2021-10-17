@@ -76,7 +76,7 @@ const UpdateProducts = () => {
   //   // console.log(`${app.login.token}`)
   //   e.preventDefault();
   //   axios
-  //     .get(`http://192.168.0.148:5000/profile`, {
+  //     .get(`${URI}/profile`, {
   //       headers: {
   //         authorization: `Bearer ${app.login.token}`,
   //         id: app.login.user,

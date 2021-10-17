@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+// *Axios
+import { URI } from "config/axios";
 // import AddProducts from "./AddProducts";
 const ListProductsSt = styled.div`
   /* width: 100%;
@@ -177,7 +179,7 @@ const ListProducts = () => {
   const [products, setProducts] = useState<ProductIT>();
   const fetchData = async () => {
     await axios
-      .get("http://192.168.0.148:5000/products", {
+      .get(`${URI}/products`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
@@ -191,7 +193,7 @@ const ListProducts = () => {
   };
   const handleDelete = async (_id: string) => {
     await axios
-      .delete(`http://192.168.0.148:5000/products/${_id}`, {
+      .delete(`${URI}/products/${_id}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },

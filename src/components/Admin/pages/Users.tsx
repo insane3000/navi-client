@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { CashRegisterIT, cashRegisterTemplate } from "interfaces/Cashregister";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { useSelector } from "react-redux";
+// *Axios
+import { URI } from "config/axios";
 const UsersSt = styled.div`
   width: 100%;
   height: 100%;
@@ -498,7 +500,7 @@ const Users = () => {
 
   const fetchData = () => {
     axios
-      .get("http://192.168.0.148:5000/cash-register", {
+      .get(`${URI}/cash-register`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },

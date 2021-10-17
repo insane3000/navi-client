@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
+// *Axios
+import { URI } from "config/axios";
 // *Redux
 // import { useSelector } from "react-redux";
 // import { showMenu } from "redux/actions/appAction";
@@ -727,7 +729,7 @@ const CashRegisterMain = () => {
     const fetchData = async (id: string) => {
       if (id) {
         await axios
-          .get(`http://192.168.0.148:5000/cash-register/${id}`, {
+          .get(`${URI}/cash-register/${id}`, {
             headers: {
               authorization: `Bearer ${app.login.token}`,
             },
@@ -761,7 +763,7 @@ const CashRegisterMain = () => {
 
     // ! Ogteniendo id del anterior registro
     await axios
-      .get(`http://192.168.0.148:5000/cash-register/${params.id}`, {
+      .get(`${URI}/cash-register/${params.id}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
@@ -786,7 +788,7 @@ const CashRegisterMain = () => {
     e.preventDefault();
 
     await axios
-      .put(`http://192.168.0.148:5000/cash-register/${params.id}`, state, {
+      .put(`${URI}/cash-register/${params.id}`, state, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },

@@ -6,7 +6,8 @@ import { useDispatch } from "react-redux";
 import { loginServer } from "redux/actions/appAction";
 import axios from "axios";
 import { useHistory } from "react-router";
-
+// *Axios
+import { URI } from "config/axios";
 //* INTERFACE APP
 // import { StoreInterface } from "interfaces/storeTemplate";
 
@@ -197,7 +198,7 @@ const AddProducts = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
-      .post("http://192.168.0.148:5000/login", login)
+      .post(`${URI}/login`, login)
       .then(function (response: any) {
         dispatch(loginServer(response.data._id, response.data.token));
         history.push(`/admin/cash-register`);

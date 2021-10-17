@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 // import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-
+// *Axios
+import { URI } from "config/axios";
 // *Icons
 // import CloseIcon from "icons/CloseIcon";
 const AddProductsSt = styled.form`
@@ -216,7 +217,7 @@ const AddProducts = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
-      .post("http://192.168.0.148:5000/products", addProducts, {
+      .post(`${URI}/products`, addProducts, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },

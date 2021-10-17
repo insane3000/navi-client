@@ -3,6 +3,9 @@ import styled from "styled-components";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
+
+// *Axios
+import { URI } from "config/axios";
 // *Icons
 import CloseIcon from "icons/CloseIcon";
 const UpdateProductsSt = styled.form`
@@ -103,7 +106,7 @@ const UpdateProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get(`http://192.168.0.148:5000/products/${params.id}`)
+        .get(`${URI}/products/${params.id}`)
         .then(function (response:any) {
           setProduct(response.data);
         })
@@ -117,7 +120,7 @@ const UpdateProducts = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
-      .put(`http://192.168.0.148:5000/products/${params.id}`, product)
+      .put(`${URI}/products/${params.id}`, product)
       .then((response) => console.log(response))
       .catch(function (error) {
         console.log(error);

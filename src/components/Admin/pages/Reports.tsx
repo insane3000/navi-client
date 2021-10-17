@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 //* Redux
 import { StoreInterface } from "interfaces/storeTemplate";
 import { useSelector } from "react-redux";
+// *Axios
+import { URI } from "config/axios";
 const ReportsSt = styled.div`
   width: 100%;
   height: 100%;
@@ -190,7 +192,7 @@ const Reports = () => {
   ) => {
     // console.log(e.target);
     axios
-      .delete(`http://192.168.0.148:5000/cash-register/${id}`, {
+      .delete(`${URI}/cash-register/${id}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
@@ -199,7 +201,7 @@ const Reports = () => {
   };
   const fetchData = () => {
     axios
-      .get("http://192.168.0.148:5000/cash-register", {
+      .get(`${URI}/cash-register`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },

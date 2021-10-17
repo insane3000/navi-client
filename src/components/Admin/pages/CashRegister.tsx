@@ -17,7 +17,8 @@ import axios from "axios";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { useSelector } from "react-redux";
 // import CashRegister from "../pages/CashRegister";
-
+// *Axios
+import { URI } from "config/axios";
 const CashRegisterMainSt = styled.div`
   width: 100%;
   height: 100%;
@@ -600,7 +601,7 @@ const CashRegisterMain = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
-      .post("http://192.168.0.148:5000/cash-register", state,{
+      .post(`${URI}/cash-register`, state, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
@@ -750,7 +751,7 @@ const CashRegisterMain = () => {
   const fetchProducts = useCallback(async () => {
     const fetchData = async (id: string) => {
       await axios
-        .get(`http://192.168.0.148:5000/cash-register/${id}`, {
+        .get(`${URI}/cash-register/${id}`, {
           headers: {
             authorization: `Bearer ${app.login.token}`,
           },
@@ -790,7 +791,7 @@ const CashRegisterMain = () => {
     // let id: "";
 
     await axios
-      .get("http://192.168.0.148:5000/products", {
+      .get(`${URI}/products`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
@@ -803,7 +804,7 @@ const CashRegisterMain = () => {
       });
     // ! Ogteniendo id del anterior registro
     await axios
-      .get("http://192.168.0.148:5000/cash-register-one", {
+      .get(`${URI}/cash-register-one`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
@@ -819,7 +820,7 @@ const CashRegisterMain = () => {
     state,
     cashRegisterReset.dashboard,
     cashRegisterReset.expenses,
-    app.login.token
+    app.login.token,
   ]);
 
   useEffect(() => {

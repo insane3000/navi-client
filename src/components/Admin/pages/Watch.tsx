@@ -17,7 +17,8 @@ import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { useSelector } from "react-redux";
-
+// *Axios
+import { URI } from "config/axios";
 const CashRegisterMainSt = styled.div`
   width: 100%;
   height: 100%;
@@ -731,7 +732,7 @@ const CashRegisterMain = () => {
     const fetchData = async (id: string) => {
       if (id) {
         await axios
-          .get(`http://192.168.0.148:5000/cash-register/${id}`, {
+          .get(`${URI}/cash-register/${id}`, {
             headers: {
               authorization: `Bearer ${app.login.token}`,
             },
@@ -766,7 +767,7 @@ const CashRegisterMain = () => {
 
     // ! Ogteniendo id del anterior registro
     await axios
-      .get(`http://192.168.0.148:5000/cash-register/${params.id}`, {
+      .get(`${URI}/cash-register/${params.id}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
@@ -790,7 +791,7 @@ const CashRegisterMain = () => {
     e.preventDefault();
 
     await axios
-      .put(`http://192.168.0.148:5000/cash-register/${params.id}`, state, {
+      .put(`${URI}/cash-register/${params.id}`, state, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
