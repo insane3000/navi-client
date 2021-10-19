@@ -60,10 +60,11 @@ interface Props {
   color: string;
   line01: string;
   line02: string;
+  id: string;
 }
 const HomeTitleComponent = (props: Props) => {
   return (
-    <HomeTitleComponentSt bg={props.bgTitle} color={props.color}>
+    <HomeTitleComponentSt bg={props.bgTitle} color={props.color} id={props.id}>
       <h2 className="title">{props.title}</h2>
       <p className="line">{props.line01}</p>
       <p className="line">{props.line02}</p>

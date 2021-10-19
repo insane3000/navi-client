@@ -30,7 +30,6 @@ const AppSt = styled.div`
 
 function App() {
   // const dispacth = useDispatch();
-  const app = useSelector((store: StoreInterface) => store.app);
   // const handleShowMenu = () => {
   //   dispacth(showMenu(!app.showMenu));
   // };
@@ -39,11 +38,10 @@ function App() {
       <AppSt id="app">
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/admin"  component={Admin} />
+          <Route path="/admin" component={Admin} />
           <Route component={Error404} />
         </Switch>
       </AppSt>
-      {app.showMenu && <FloatMenu />}
     </Router>
   );
 }

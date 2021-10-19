@@ -10,6 +10,8 @@ import HomePromo from "components/home/molecules/HomePromo";
 const HomePageSt = styled.div`
   background: #e4e4e4;
   /* overflow-x: hidden; */
+  width: 100%;
+  height: 100%;
   overflow-y: scroll;
   // !Estilos para DESKTOP
   @media only screen and (min-width: 568px) {
@@ -20,6 +22,7 @@ const HomePage = () => {
     <HomePageSt>
       <HomeIntro />
       <HomeTitleComponent
+        id="#points"
         title="CANJEA TUS PUNTOS!"
         bgTitle="#ff0040"
         color="white"
@@ -28,6 +31,7 @@ const HomePage = () => {
       />
       <HomePoints />
       <HomeTitleComponent
+        id="#games"
         title="JUEGOS ACTUALIZADOS"
         bgTitle="#ff006a"
         color="white"
@@ -36,6 +40,7 @@ const HomePage = () => {
       />
       <HomeGames img={""} />
       <HomeTitleComponent
+        id="#promos"
         title="NUESTRAS PROMOCIONES"
         bgTitle="#0099ff"
         color="white"
@@ -44,6 +49,7 @@ const HomePage = () => {
       />
       <HomePromo />
       <HomeTitleComponent
+        id="#location"
         title="NUESTRA UBICACIÓN"
         bgTitle="#ffbb00"
         color="black"

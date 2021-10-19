@@ -10,4 +10,6 @@
 //   timeout: 3000,
 // });
 
-export const URI = "http://192.168.160.128:5000";
+// export const URI = "http://192.168.0.148:5000";
+export const URI = "https://shoke.cc/";
+
