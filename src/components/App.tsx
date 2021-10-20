@@ -2,18 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 // *Redux
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 // import { showMenu } from "redux/actions/appAction";
 
 //* INTERFACE APP
-import { StoreInterface } from "interfaces/storeTemplate";
+// import { StoreInterface } from "interfaces/storeTemplate";
 // *Components
 import Home from "./home/pages/Home";
 import Error404 from "./home/pages/Error404";
 // import Menu from "./organisms/Menu";
 // *Fonts
 import "fonts/fonts.css";
-import FloatMenu from "./home/organisms/FloatMenu";
+// import FloatMenu from "./home/organisms/FloatMenu";
 import Admin from "./Admin/Admin";
 
 const AppSt = styled.div`

@@ -7,13 +7,14 @@ import { StoreInterface } from "interfaces/storeTemplate";
 import { useSelector } from "react-redux";
 // *Axios
 import { URI } from "config/axios";
+import Spinner from "./Spinner";
 const UsersSt = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 20% 80%;
-
+  position: relative;
   .tables {
     display: grid;
     grid-template-columns: 100%;
@@ -464,6 +465,7 @@ type StateIT = [CashRegisterIT];
 const Users = () => {
   const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState<StateIT>([cashRegisterTemplate]);
+  //console.log(state);
   const [nameState, setNameState] = useState("ninguno");
   const [initialDate, setInitialDate] = useState(
     `${new Date().toISOString().substring(0, 11)}10:00`
@@ -654,7 +656,7 @@ const Users = () => {
           </div>
         </div>
       </div>
-    </UsersSt>
+      {state.length === 1 ? <Spinner /> : null}    </UsersSt>
   );
 };
 

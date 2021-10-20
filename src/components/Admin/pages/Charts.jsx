@@ -6,12 +6,14 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 // *Axios
 import { URI } from "config/axios";
+import Spinner from "./Spinner";
 const ChartsSt = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   .mobile {
     width: 100%;
     height: 100%;
@@ -186,6 +188,7 @@ const Charts = () => {
       <section className="chartContainer">
         <Line data={data} options={options} />
       </section>
+      {!state && <Spinner />}
     </ChartsSt>
   );
 };

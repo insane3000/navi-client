@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 // *Axios
 import { URI } from "config/axios";
+import Spinner from "./Spinner";
 // import AddProducts from "./AddProducts";
 const ListProductsSt = styled.div`
   /* width: 100%;
@@ -14,6 +15,7 @@ const ListProductsSt = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 40% 60%; */
+  position: relative;
   .tableData {
     display: grid;
     grid-template-columns: 100%;
@@ -177,6 +179,7 @@ const ListProducts = () => {
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [products, setProducts] = useState<ProductIT>();
+  //console.log(products);
   const fetchData = async () => {
     await axios
       .get(`${URI}/products`, {
@@ -259,6 +262,7 @@ const ListProducts = () => {
           </div>
         ))}
       </div>
+      {!products && <Spinner />}
     </ListProductsSt>
   );
 };

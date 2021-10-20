@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 // import CashRegister from "../pages/CashRegister";
 // *Axios
 import { URI } from "config/axios";
+import Spinner from "./Spinner";
 const CashRegisterMainSt = styled.div`
   width: 100%;
   height: 100%;
@@ -29,7 +30,7 @@ const CashRegisterMainSt = styled.div`
   font-family: "Roboto 300";
   font-size: 2rem;
   color: white;
-
+  position: relative;
   .SalesAndExpenses {
     display: grid;
     grid-template-columns: 100%;
@@ -513,7 +514,7 @@ const CashRegisterMain = () => {
     day: "numeric",
   };
   const [state, setState] = useState<CashRegisterIT>(cashRegisterTemplate);
-  // console.log(state);
+  //console.log(state);
   // !Calculamos las ventas y el dinero de las ventas
   state.sales.map((i) => {
     i.sales = i.load + i.previousServer - i.currentServer;
@@ -1036,6 +1037,7 @@ const CashRegisterMain = () => {
             </div>
           ))}
         </ExpensesSt>
+        {state.sales.length === 1 ? <Spinner /> : null}
       </div>
     </CashRegisterMainSt>
   );

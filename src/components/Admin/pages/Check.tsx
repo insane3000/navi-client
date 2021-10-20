@@ -18,6 +18,7 @@ import axios from "axios";
 import { useHistory, useParams } from "react-router";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { useSelector } from "react-redux";
+import Spinner from "./Spinner";
 // import { Link } from "react-router-dom";
 
 const CashRegisterMainSt = styled.div`
@@ -30,7 +31,7 @@ const CashRegisterMainSt = styled.div`
   font-family: "Roboto 300";
   font-size: 2rem;
   color: white;
-
+position: relative;
   .SalesAndExpenses {
     display: grid;
     grid-template-columns: 100%;
@@ -1011,6 +1012,7 @@ const CashRegisterMain = () => {
           ))}
         </ExpensesSt>
       </div>
+      {state.sales.length === 1 ? <Spinner /> : null}
     </CashRegisterMainSt>
   );
 };

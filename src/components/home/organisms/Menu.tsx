@@ -3,8 +3,12 @@ import styled from "styled-components";
 // *Images
 import NaviLogo from "img/logo-navi.png";
 // *Icons
-import InformationIcon from "icons/InformationIcon";
+import AlertIcon from "icons/AlertIcon";
+import WifiIcon from "icons/WifiIcon";
+import LockIcon from "icons/LockIcon";
 import FacebookIcon from "icons/FacebookIcon";
+import UserIcon from "icons/UserIcon";
+import { Link } from "react-router-dom";
 
 const MenuSt = styled.div`
   width: 100%;
@@ -37,9 +41,10 @@ const MenuSt = styled.div`
     justify-content: start;
     align-items: center;
     border: 0.0625rem solid #1f1f1f;
-    border-radius: 0%.2rem;
+    border-radius: 0.2rem;
+    text-decoration: none;
     .sysIcon {
-      color: white;
+      color: #ffffff;
       width: 2rem;
       height: 2rem;
       font-family: 2rem;
@@ -53,11 +58,11 @@ const MenuSt = styled.div`
       width: 12rem;
       height: 3rem;
       font-family: "Roboto 300";
-      font-size: 1.2rem;
+      font-size: 1rem;
       display: flex;
       justify-content: start;
       align-items: center;
-      color: white;
+      color: #ffffff;
       text-decoration: none;
     }
     .miniText {
@@ -68,6 +73,25 @@ const MenuSt = styled.div`
   .noBg {
     background: none;
     border: none;
+  }
+  .noBgHover {
+    border-radius: 0rem;
+    margin-bottom: 0rem;
+    .sysIcon {
+        color: #9e9e9e;
+      }
+      .text {
+        color: #9e9e9e;
+      }
+    &:hover {
+      background: #161616;
+      .sysIcon {
+        color: #ffffff;
+      }
+      .text {
+        color: #ffffff;
+      }
+    }
   }
   .date {
     color: #929292;
@@ -88,26 +112,28 @@ const Menu = () => {
       <img className="naviLogo" src={NaviLogo} alt="logotipo navi" />
       <h2 className="wifiTitle">Wi - Fi</h2>
       <span className="wifiSection ">
-        <InformationIcon className="sysIcon" />{" "}
-        <p className="text">Natus Vincere</p>
+        <WifiIcon className="sysIcon" /> <p className="text">Natus Vincere</p>
       </span>
       <span className="wifiSection ">
-        <InformationIcon className="sysIcon" />{" "}
-        <p className="text">relax3000</p>
+        <LockIcon className="sysIcon" /> <p className="text">relax3000</p>
       </span>
       <span className="wifiSection noBg">
-        <InformationIcon className="sysIcon miniIcon" />
+        <AlertIcon className="sysIcon miniIcon" />
         <p className="text miniText">
           Recuerda que la constraseña es renovada aleatoriamente.
         </p>
       </span>
-      <a href="https://www.facebook.com/NaviGamesCbba"></a>
-      <span className="wifiSection noBg">
+      <span className="wifiSection noBg noBgHover">
         <FacebookIcon className="sysIcon" />
-        <a className="text " href="https://www.facebook.com/NaviGamesCbba">
+        <a className="text" href="https://www.facebook.com/NaviGamesCbba">
           Facebook
         </a>
       </span>
+      <Link className="wifiSection noBg noBgHover" to="/admin">
+        <UserIcon className="sysIcon" />
+        <span className="text "> Ingresar</span>
+      </Link>
+      lin
       <span className="date">Navi Games Cbba 2013 - {date}</span>
     </MenuSt>
   );

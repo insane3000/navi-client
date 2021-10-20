@@ -6,14 +6,14 @@ import CloseIcon from "icons/CloseIcon";
 // import InformationIcon from "icons/InformationIcon";
 
 // *Images
-import NaviLogo from "img/logo-navi.png";
-import NaviFb from "img/logo-fb.png";
+// import NaviLogo from "img/logo-navi.png";
+// import NaviFb from "img/logo-fb.png";
 // *Redux
 import { useDispatch, useSelector } from "react-redux";
 import { showMenu } from "redux/actions/appAction";
 //* INTERFACE APP
 import { StoreInterface } from "interfaces/storeTemplate";
-import NavLinkComponent from "components/home/atoms/NavLinkComponent";
+// import NavLinkComponent from "components/home/atoms/NavLinkComponent";
 import Menu from "./Menu";
 // import { NavLink } from "react-router-dom";
 // import { section } from "react-router-dom";
@@ -47,7 +47,7 @@ const FloatMenuSt = styled.div`
     background: #000000b2;
   }
   .navigation {
-    width: 20rem;
+    width: 80%;
     height: 100%;
     background: red;
     position: absolute;

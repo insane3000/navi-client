@@ -11,10 +11,11 @@ import { StoreInterface } from "interfaces/storeTemplate";
 import { useSelector } from "react-redux";
 // *Axios
 import { URI } from "config/axios";
+import Spinner from "./Spinner";
 const ReportsSt = styled.div`
   width: 100%;
   height: 100%;
-
+  position: relative;
   .table {
     width: 100%;
     height: 100%;
@@ -288,6 +289,7 @@ const Reports = () => {
           </div>
         ))}
       </div>
+      {!state && <Spinner />}
     </ReportsSt>
   );
 };
