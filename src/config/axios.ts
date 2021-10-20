@@ -11,7 +11,7 @@
 // });
 
 // !Development
-export const URI = "http://localhost:5000";
+// export const URI = "http://localhost:5000";
 
 // !Production
-// export const URI = "https://shoke.cc";
+export const URI = "https://shoke.cc";

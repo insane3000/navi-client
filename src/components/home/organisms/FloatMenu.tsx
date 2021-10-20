@@ -30,7 +30,7 @@ const FloatMenuSt = styled.div`
     width: 2.5rem;
     height: 2.5rem;
     position: absolute;
-    left: 20.5rem;
+    left: 85%;
     top: 1rem;
     color: black;
     padding: 0.5rem;
