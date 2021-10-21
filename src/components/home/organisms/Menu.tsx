@@ -129,11 +129,11 @@ const Menu = () => {
           Facebook
         </a>
       </span>
-      <Link className="wifiSection noBg noBgHover" to="/admin">
+      <Link className="wifiSection noBg noBgHover" to="/admin/login">
         <UserIcon className="sysIcon" />
         <span className="text "> Ingresar</span>
       </Link>
-      lin
+      
       <span className="date">Navi Games Cbba 2013 - {date}</span>
     </MenuSt>
   );

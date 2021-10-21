@@ -162,7 +162,103 @@ const ListProductsSt = styled.div`
     }
   }
 `;
-
+const WarningSt = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #080808;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  .warningComponent {
+    width: 20rem;
+    height: 20rem;
+    background: #131212;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3rem;
+    .title {
+      font-family: "Roboto 100";
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .buttons {
+      width: 20rem;
+      height: 4rem;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      .btn {
+        width: 6rem;
+        height: 3rem;
+        border-style: none;
+        outline: none;
+        font-family: "Roboto 300";
+        font-size: 1.5rem;
+        border-radius: 0.2rem;
+        cursor: pointer;
+        &:hover {
+          background: #6200ff;
+          color: white;
+        }
+      }
+    }
+  }
+  @media only screen and (min-width: 568px) {
+    width: 100%;
+    height: 100%;
+    background: #080808;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    .warningComponent {
+      width: 30rem;
+      height: 15rem;
+      background: #131212;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.3rem;
+      .title {
+        font-family: "Roboto 100";
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+      .buttons {
+        width: 25rem;
+        height: 4rem;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        .btn {
+          width: 10rem;
+          height: 3rem;
+          border-style: none;
+          outline: none;
+          font-family: "Roboto 300";
+          font-size: 1.5rem;
+          border-radius: 0.2rem;
+          cursor: pointer;
+          &:hover {
+            background: #6200ff;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+`;
 type ProductIT = [
   {
     name: string;
@@ -179,6 +275,32 @@ const ListProducts = () => {
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [products, setProducts] = useState<ProductIT>();
+  const [deleteId, setDeleteId] = useState("");
+  const [modal, setModal] = useState(false);
+  // !Modal Function
+  const handleModal = (
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    id: any
+  ) => {
+    setDeleteId(id);
+    setModal(!modal);
+  };
+  // !Delete Function
+  const handleDelete = async () => {
+    await axios
+      .delete(`${URI}/products/${deleteId}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
+      .then(() => {
+        fetchData();
+        setModal(!modal);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   //console.log(products);
   const fetchData = async () => {
     await axios
@@ -194,19 +316,7 @@ const ListProducts = () => {
         console.log(error);
       });
   };
-  const handleDelete = async (_id: string) => {
-    await axios
-      .delete(`${URI}/products/${_id}`, {
-        headers: {
-          authorization: `Bearer ${app.login.token}`,
-        },
-      })
-      .then((response) => console.log(response))
-      .catch(function (error) {
-        console.log(error);
-      });
-    fetchData();
-  };
+
   const handleUpdate = async (_id: string) => {
     history.push(`/admin/update-product/${_id}`);
   };
@@ -255,13 +365,28 @@ const ListProducts = () => {
             </section>
             <section
               className="cell  delete"
-              onClick={() => handleDelete(i._id)}
+              onClick={(e) => handleModal(e, i._id)}
             >
               borrar
             </section>
           </div>
         ))}
       </div>
+      {modal && (
+        <WarningSt>
+          <div className="warningComponent">
+            <h2 className="title">¿Estás seguro?</h2>
+            <section className="buttons">
+              <button className="btn" onClick={() => setModal(!modal)}>
+                No
+              </button>
+              <button className="btn" onClick={handleDelete}>
+                Si
+              </button>
+            </section>
+          </div>
+        </WarningSt>
+      )}
       {!products && <Spinner />}
     </ListProductsSt>
   );

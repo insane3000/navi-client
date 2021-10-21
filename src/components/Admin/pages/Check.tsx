@@ -77,11 +77,11 @@ position: relative;
 `;
 // ?Sector Dashboard
 const DashboardSt = styled.form`
-  width: 100%;
+   width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 24% 24% 24% 24%;
-  grid-auto-rows: 3rem;
+  grid-auto-rows: 3.2rem;
   gap: 0.2rem;
   justify-content: center;
   align-content: center;
@@ -90,10 +90,13 @@ const DashboardSt = styled.form`
   .cellDashboard {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 40% 60%;
+    grid-template-rows: 30% 70%;
     background: #161616;
+    /* background: red; */
     overflow: hidden;
     border-radius: 0.3rem;
+    text-decoration: none;
+    /* padding: 0 .2rem; */
     .cellDashboardTitle {
       text-align: center;
       text-transform: capitalize;
@@ -104,7 +107,8 @@ const DashboardSt = styled.form`
       color: #727272;
     }
     .cellDashboardInput {
-      height: 1.5rem;
+      width: 90%;
+      height: 90%;
       justify-self: center;
       align-self: flex-start;
       border-radius: 0.3rem;
@@ -114,7 +118,7 @@ const DashboardSt = styled.form`
       text-align: center;
       /* background: #050505; */
       font-family: "Roboto 900";
-      font-size: 0.6rem;
+      font-size: 1rem;
       color: white;
       display: flex;
       justify-content: center;
@@ -122,7 +126,7 @@ const DashboardSt = styled.form`
     }
     .select {
       background: none;
-      /* width: 100%; */
+      width: 90%;
       font-size: 0.6rem;
       text-align: start;
       text-transform: capitalize;
@@ -140,7 +144,6 @@ const DashboardSt = styled.form`
     }
     .number {
       background: #050505;
-      width: 80%;
     }
     .button {
       background: #ffffff;
@@ -148,9 +151,13 @@ const DashboardSt = styled.form`
       font-size: 0.6rem;
       width: 80%;
       cursor: pointer;
-      text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8);
-      padding: 0.5rem;
+      text-transform: uppercase;
+      a {
+        text-decoration: none;
+      }
 
+      /* text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8); */
+      padding: 0.5rem;
       &:active {
         background: #230075;
         position: relative;
@@ -158,7 +165,6 @@ const DashboardSt = styled.form`
       }
     }
   }
-
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     display: grid;
@@ -839,7 +845,7 @@ const CashRegisterMain = () => {
         <section className="cellDashboard">
           <span className="cellDashboardTitle">gastos totales</span>
           <section className="cellDashboardInput">
-            {state.dashboard.totalExpenses}
+            {state.dashboard.totalExpenses.toFixed(2)}
           </section>
         </section>
         <section className="cellDashboard">

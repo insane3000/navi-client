@@ -12,6 +12,10 @@ import { useSelector } from "react-redux";
 // *Axios
 import { URI } from "config/axios";
 import Spinner from "./Spinner";
+// *icons
+import DeleteIcon from "icons/DeleteIcon";
+import WatchIcon from "icons/WatchIcon";
+import EditIcon from "icons/EditIcon";
 const ReportsSt = styled.div`
   width: 100%;
   height: 100%;
@@ -28,7 +32,7 @@ const ReportsSt = styled.div`
     border-right: 0.0625rem solid #333333;
     .tRow {
       display: grid;
-      grid-template-columns: calc(25% - 1rem) 15% 15% 15% 15% 15%;
+      grid-template-columns: calc(30% - 1.6rem) 10% 10% 10% 10% 10% 10% 10%;
       grid-template-rows: 100%;
       column-gap: 0.2rem;
       justify-content: center;
@@ -49,7 +53,7 @@ const ReportsSt = styled.div`
         border-radius: 0.3rem;
         text-transform: capitalize;
         font-family: "Roboto 300";
-        font-size: 0.5rem;
+        font-size: 0.6rem;
         color: white;
         padding: 0 0.5rem;
         position: relative;
@@ -66,7 +70,26 @@ const ReportsSt = styled.div`
       .head {
         background: #000000;
         font-family: "Roboto 900";
-        /* border-radius: 0; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .sysIcon {
+          width: 100;
+          height: 100%;
+          justify-self: center;
+          align-self: center;
+          font-size: 1rem;
+        }
+        .text {
+          width: 60%;
+          height: 100%;
+          display: flex;
+          justify-content: start;
+          align-items: center;
+        }
+        .noneText {
+          display: none;
+        }
       }
       .none {
         display: none;
@@ -108,10 +131,10 @@ const ReportsSt = styled.div`
       background: #0c0c0c;
       overflow-y: scroll;
       border-right: 0.0625rem solid #333333;
-      position: relative;
+      /* position: relative; */
       .tRow {
         display: grid;
-        grid-template-columns: calc(20% - 2rem) 15% 10% 10% 10% 10% 10% 5% 5% 5%;
+        grid-template-columns: calc(20% - 2rem) 15% 10% 10% 7.5% 7.5% 7.5% 7.5% 7.5% 7.5%;
         grid-template-rows: 100%;
         column-gap: 0.2rem;
         justify-content: center;
@@ -133,7 +156,7 @@ const ReportsSt = styled.div`
           font-family: "Roboto 300";
           color: white;
           padding: 0 0.5rem;
-          position: relative;
+          /* position: relative; */
           /* .modified {
             position: absolute;
             bottom: 0;
@@ -145,7 +168,26 @@ const ReportsSt = styled.div`
         .head {
           background: #000000;
           font-family: "Roboto 900";
-          /* border-radius: 0; */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .sysIcon {
+            width: 40%;
+            height: 60%;
+            justify-self: center;
+            align-self: center;
+            font-size: 1rem;
+          }
+          .text {
+            width: 60%;
+            height: 100%;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+          }
+          .noneText {
+            display: flex;
+          }
         }
         .none {
           display: flex;
@@ -174,32 +216,140 @@ const ReportsSt = styled.div`
     }
   }
 `;
+const WarningSt = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #080808;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  .warningComponent {
+    width: 20rem;
+    height: 20rem;
+    background: #131212;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3rem;
+    .title {
+      font-family: "Roboto 100";
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .buttons {
+      width: 20rem;
+      height: 4rem;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      .btn {
+        width: 6rem;
+        height: 3rem;
+        border-style: none;
+        outline: none;
+        font-family: "Roboto 300";
+        font-size: 1.5rem;
+        border-radius: 0.2rem;
+        cursor: pointer;
+        &:hover {
+          background: #6200ff;
+          color: white;
+        }
+      }
+    }
+  }
+  @media only screen and (min-width: 568px) {
+    width: 100%;
+    height: 100%;
+    background: #080808;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    .warningComponent {
+      width: 30rem;
+      height: 15rem;
+      background: #131212;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.3rem;
+      .title {
+        font-family: "Roboto 100";
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+      .buttons {
+        width: 25rem;
+        height: 4rem;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        .btn {
+          width: 10rem;
+          height: 3rem;
+          border-style: none;
+          outline: none;
+          font-family: "Roboto 300";
+          font-size: 1.5rem;
+          border-radius: 0.2rem;
+          cursor: pointer;
+          &:hover {
+            background: #6200ff;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+`;
 type StateIT = [CashRegisterIT];
 const Reports = () => {
   const history = useHistory();
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState<StateIT>();
-  // console.log(state);
+  const [deleteId, setDeleteId] = useState("");
+  const [modal, setModal] = useState(false);
+  // console.log(deleteId);
   // console.log(history);
 
   state?.sort(function (a: any, b: any) {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
   // console.log(sort);
-  const handleDelete = (
+  // !Modal Function
+  const handleModal = (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
     id: any
   ) => {
-    // console.log(e.target);
-    axios
-      .delete(`${URI}/cash-register/${id}`, {
+    setDeleteId(id);
+    setModal(!modal);
+  };
+  // !Delete Function
+  const handleDelete = async () => {
+    await axios
+      .delete(`${URI}/cash-register/${deleteId}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
       })
-      .then(() => fetchData());
+      .then(() => {
+        fetchData();
+        setModal(!modal);
+      });
   };
+
   const fetchData = () => {
     axios
       .get(`${URI}/cash-register`, {
@@ -233,16 +383,25 @@ const Reports = () => {
     <ReportsSt>
       <div className="table">
         <div className="tRow tHead">
-          <section className="cell head">Fecha de creacion</section>
+          <section className="cell head">Fecha</section>
           <section className="cell head">Server</section>
-          <section className="cell head none">Ventas Totales</section>
-          <section className="cell head none">Gastos totales</section>
+          <section className="cell head none">Ventas</section>
+          <section className="cell head ">Gastos</section>
           <section className="cell head none">Pancafe</section>
-          <section className="cell head none">Efectivo</section>
+          <section className="cell head ">Efectivo</section>
           <section className="cell head">Balance</section>
-          <section className="cell head">Ver</section>
-          <section className="cell head">Editar</section>
-          <section className="cell head">Borrar</section>
+          <section className="cell head">
+            <WatchIcon className="sysIcon" />
+            <span className="text noneText">Ver</span>
+          </section>
+          <section className="cell head">
+            <EditIcon className="sysIcon" />
+            <span className="text noneText">Editar</span>
+          </section>
+          <section className="cell head">
+            <DeleteIcon className="sysIcon" />
+            <span className="text noneText">Borrar</span>
+          </section>
         </div>
 
         {state?.map((i) => (
@@ -251,7 +410,7 @@ const Reports = () => {
               className="cell"
               style={
                 i.createdAt !== i.updatedAt
-                  ? { color: "#ff0000" }
+                  ? { color: "#00ffaa" }
                   : { color: "#ffffff" }
               }
               title={new Date(i.updatedAt).toLocaleDateString("es-ES", options)}
@@ -261,16 +420,20 @@ const Reports = () => {
 
             <section className="cell">{i.dashboard.server}</section>
             <section className="cell none">{i.dashboard.totalSales}</section>
-            <section className="cell none">{i.dashboard.totalExpenses}</section>
+            <section className="cell ">
+              {i.dashboard.totalExpenses.toFixed(2)}
+            </section>
             <section className="cell none">{i.dashboard.pancafe}</section>
-            <section className="cell none">{i.dashboard.totalCash}</section>
+            <section className="cell ">{i.dashboard.totalCash}</section>
             <section className="cell">{i.dashboard.balance.toFixed(2)}</section>
-            <Link className="cell action" to={`/admin/watch/${i._id}`}>
-              Ver
+            <Link className="cell head action" to={`/admin/watch/${i._id}`}>
+              <WatchIcon className="sysIcon" />
+              <span className="text noneText">Ver</span>
             </Link>
             {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
-              <Link className="cell action" to={`/admin/check/${i._id}`}>
-                Editar
+              <Link className="cell  head action" to={`/admin/check/${i._id}`}>
+                <EditIcon className="sysIcon" />
+                <span className="text noneText">Editar</span>
               </Link>
             ) : (
               <span className="cell">-</span>
@@ -278,10 +441,11 @@ const Reports = () => {
 
             {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
               <section
-                className="cell action"
-                onClick={(e) => handleDelete(e, i._id)}
+                className="cell head action"
+                onClick={(e) => handleModal(e, i._id)}
               >
-                Borrar
+                <DeleteIcon className="sysIcon" />
+                <span className="text noneText">Borrar</span>
               </section>
             ) : (
               <span className="cell">-</span>
@@ -289,6 +453,21 @@ const Reports = () => {
           </div>
         ))}
       </div>
+      {modal && (
+        <WarningSt>
+          <div className="warningComponent">
+            <h2 className="title">¿Estás seguro?</h2>
+            <section className="buttons">
+              <button className="btn" onClick={() => setModal(!modal)}>
+                No
+              </button>
+              <button className="btn" onClick={handleDelete}>
+                Si
+              </button>
+            </section>
+          </div>
+        </WarningSt>
+      )}
       {!state && <Spinner />}
     </ReportsSt>
   );

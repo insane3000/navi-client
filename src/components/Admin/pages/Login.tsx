@@ -8,6 +8,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 // *Axios
 import { URI } from "config/axios";
+import Spinner from "./Spinner";
 //* INTERFACE APP
 // import { StoreInterface } from "interfaces/storeTemplate";
 
@@ -24,6 +25,7 @@ const AddProductsSt = styled.form`
   font-size: 2rem;
   position: relative;
   border-right: 0.0625rem solid #333333;
+  position: relative;
 
   .close {
     position: absolute;
@@ -75,6 +77,13 @@ const AddProductsSt = styled.form`
     -webkit-box-shadow: 0 0 0px 1000px #000 inset;
     box-shadow: 0 0 0px 1000px #000 inset;
     transition: background-color 5000s ease-in-out 0s;
+  }
+  .alert {
+    width: 80%;
+    color: red;
+    font-family: "Roboto 300";
+    font-size: 1rem;
+    margin-bottom: 1rem;
   }
   .btnSubmit {
     background: #4400ff;
@@ -156,6 +165,13 @@ const AddProductsSt = styled.form`
       box-shadow: 0 0 0px 1000px #000 inset;
       transition: background-color 5000s ease-in-out 0s;
     }
+    .alert {
+      width: 20rem;
+      color: red;
+      font-family: "Roboto 300";
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
     .btnSubmit {
       background: #4400ff;
       width: 20rem;
@@ -187,6 +203,9 @@ const AddProducts = () => {
   const dispatch = useDispatch();
   // const app = useSelector((store: StoreInterface) => store.app);
   const [login, setLogin] = useState<LoginIT>(loginTemplate);
+  const [spinner, setSpinner] = useState(false);
+  const [errorUser, setErrorUser] = useState(false);
+  // console.log(login);
   const handleAddProducts = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -197,6 +216,8 @@ const AddProducts = () => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSpinner(true);
+
     await axios
       .post(`${URI}/login`, login)
       .then(function (response: any) {
@@ -205,7 +226,9 @@ const AddProducts = () => {
         // console.log(response.data)
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
+        setSpinner(false);
+        setErrorUser(true);
       });
     // console.log(login);
   };
@@ -232,10 +255,11 @@ const AddProducts = () => {
         onFocus={(e) => e.target.select()}
         required
       />
-
+      {errorUser && <span className="alert">Los datos son incorrectos.</span>}
       <button className="btnSubmit" type="submit">
         Entrar
       </button>
+      {spinner && <Spinner />}
     </AddProductsSt>
   );
 };
