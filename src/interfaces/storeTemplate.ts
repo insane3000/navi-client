@@ -2,6 +2,7 @@ import { cashRegisterTemplate, CashRegisterIT } from "interfaces/Cashregister";
 
 export type AppInterface = {
   showMenu: boolean;
+  
   login: {
     user: string;
     token: string;
@@ -10,6 +11,7 @@ export type AppInterface = {
 };
 export const appTemplate: AppInterface = {
   showMenu: false,
+  
   login: {
     user: "",
     token: "",

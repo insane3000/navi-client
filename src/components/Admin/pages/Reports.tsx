@@ -322,7 +322,7 @@ const Reports = () => {
   const [deleteId, setDeleteId] = useState("");
   const [modal, setModal] = useState(false);
   // console.log(deleteId);
-  // console.log(history);
+  // console.log(state);
 
   state?.sort(function (a: any, b: any) {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -415,7 +415,7 @@ const Reports = () => {
               }
               title={new Date(i.updatedAt).toLocaleDateString("es-ES", options)}
             >
-              {new Date(i.createdAt).toLocaleDateString("es-ES", options)}
+              {new Date(i.date).toLocaleDateString("es-ES", options)}
             </section>
 
             <section className="cell">{i.dashboard.server}</section>
@@ -424,8 +424,21 @@ const Reports = () => {
               {i.dashboard.totalExpenses.toFixed(2)}
             </section>
             <section className="cell none">{i.dashboard.pancafe}</section>
-            <section className="cell ">{i.dashboard.totalCash}</section>
-            <section className="cell">{i.dashboard.balance.toFixed(2)}</section>
+            <section className="cell " style={{ color: "#00ffaa" }}>
+              {i.dashboard.totalCash}
+            </section>
+            <section
+              className="cell"
+              style={
+                i.dashboard.balance < 0
+                  ? { color: "red" }
+                  : i.dashboard.balance > 0
+                  ? { color: "lime" }
+                  : { color: "#a3a3a3" }
+              }
+            >
+              {i.dashboard.balance.toFixed(2)}
+            </section>
             <Link className="cell head action" to={`/admin/watch/${i._id}`}>
               <WatchIcon className="sysIcon" />
               <span className="text noneText">Ver</span>

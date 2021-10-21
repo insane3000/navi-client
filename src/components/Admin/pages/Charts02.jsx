@@ -85,7 +85,7 @@ const Charts = () => {
     charts = [
       ...charts,
       {
-        date: new Date(i.createdAt).toLocaleDateString("es-ES", optionsDate),
+        date: new Date(i.date).toLocaleDateString("es-ES", optionsDate),
         balance: i.dashboard.totalCash,
 
         popularesProfit: validationQuantity(i, "populares"),

@@ -31,7 +31,7 @@ const CashRegisterMainSt = styled.div`
   font-family: "Roboto 300";
   font-size: 2rem;
   color: white;
-position: relative;
+  position: relative;
   .SalesAndExpenses {
     display: grid;
     grid-template-columns: 100%;
@@ -77,7 +77,7 @@ position: relative;
 `;
 // ?Sector Dashboard
 const DashboardSt = styled.form`
-   width: 100%;
+  width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 24% 24% 24% 24%;
@@ -137,11 +137,13 @@ const DashboardSt = styled.form`
         font-size: 0.6rem;
       }
     }
-    .date {
-      font-size: 0.6rem;
-      text-transform: capitalize;
-      width: 100%;
-    }
+    .dateEdit {
+        width: 100%;
+        font-size: 1rem;
+        text-transform: capitalize;
+        background: #030303;
+        font-family: "Roboto 300";
+      }
     .number {
       background: #050505;
     }
@@ -219,10 +221,12 @@ const DashboardSt = styled.form`
           font-size: 1.5rem;
         }
       }
-      .date {
+      .dateEdit {
         width: 100%;
-        font-size: 1.5rem;
+        font-size: 1rem;
         text-transform: capitalize;
+        background: #030303;
+        font-family: "Roboto 300";
       }
       .number {
         background: #050505;
@@ -516,17 +520,17 @@ const CashRegisterMain = () => {
   let history = useHistory();
   const app = useSelector((store: StoreInterface) => store.app);
   // const today = new Date();
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  };
+  // const options: Intl.DateTimeFormatOptions = {
+  //   weekday: "short",
+  //   year: "numeric",
+  //   month: "short",
+  //   day: "numeric",
+  // };
   const cashRegisterReset = {
     createdAt: "",
     updatedAt: "",
     lastRecord: "",
-
+    date: "",
     dashboard: {
       //_id: "",
       date: "",
@@ -732,6 +736,14 @@ const CashRegisterMain = () => {
       },
     });
   };
+  // !Handle change DATE
+  const handleChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setState({
+      ...state,
+      date: value.trim(),
+    });
+  };
   const fetchProducts = useCallback(async () => {
     const fetchData = async (id: string) => {
       if (id) {
@@ -815,9 +827,17 @@ const CashRegisterMain = () => {
       <DashboardSt onSubmit={handleSubmit}>
         <section className="cellDashboard">
           <span className="cellDashboardTitle">fecha</span>
-          <section className="cellDashboardInput date">
+          {/* <section className="cellDashboardInput date">
             {new Date(state.createdAt).toLocaleDateString("es-ES", options)}
-          </section>
+          </section> */}
+          <input
+            className="cellDashboardInput dateEdit"
+            type="text"
+            name="date"
+            value={state.date === undefined ? state.createdAt : state.date}
+            onChange={handleChangeDate}
+           
+          />
         </section>
         <section className="cellDashboard">
           <span className="cellDashboardTitle">server</span>

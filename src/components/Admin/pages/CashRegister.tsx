@@ -76,7 +76,7 @@ const CashRegisterMainSt = styled.div`
 `;
 // ?Sector Dashboard
 const DashboardSt = styled.form`
-   width: 100%;
+  width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 24% 24% 24% 24%;
@@ -520,8 +520,9 @@ const CashRegisterMain = () => {
     month: "short",
     day: "numeric",
   };
+
   const [state, setState] = useState<CashRegisterIT>(cashRegisterTemplate);
-  //console.log(state);
+  // console.log(state);
   // !Calculamos las ventas y el dinero de las ventas
   state.sales.map((i) => {
     i.sales = i.load + i.previousServer - i.currentServer;
@@ -529,11 +530,7 @@ const CashRegisterMain = () => {
     i.cash = i.sales * i.price;
     return i;
   });
-  // // !Calculamos las ganancias
-  // state.sales.map((i) => {
-  //   i.profit = i.sales * (i.price - i.cost);
-  //   return i;
-  // });
+
   // !Sacamos el resultado de las ventas totales
   if (state.sales.length > 0) {
     state.dashboard.totalSales = state.sales
@@ -608,6 +605,8 @@ const CashRegisterMain = () => {
   // !Function submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    state.date = new Date().toISOString();
+    // state.user = app.login.user;
     await axios
       .post(`${URI}/cash-register`, state, {
         headers: {

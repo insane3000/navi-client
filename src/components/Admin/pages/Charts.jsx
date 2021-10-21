@@ -64,10 +64,7 @@ const Charts = () => {
       });
   };
 
-  // state?.sort(function (a, b) {
-  //   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  // });
-
+ 
   const optionsDate = {
     weekday: "short",
     year: "numeric",
@@ -83,7 +80,7 @@ const Charts = () => {
     charts = [
       ...charts,
       {
-        date: new Date(i.createdAt).toLocaleDateString("es-ES", optionsDate),
+        date: new Date(i.date).toLocaleDateString("es-ES", optionsDate),
         balance: i.dashboard.totalCash,
         expenses: i.dashboard.totalExpenses,
         sales: i.dashboard.totalSales,

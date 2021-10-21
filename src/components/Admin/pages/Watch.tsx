@@ -525,7 +525,7 @@ const CashRegisterMain = () => {
     createdAt: "",
     updatedAt: "",
     lastRecord: "",
-
+    date: "",
     dashboard: {
       //_id: "",
       date: "",

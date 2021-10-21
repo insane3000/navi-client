@@ -3,7 +3,7 @@ export interface CashRegisterIT {
   createdAt: string;
   updatedAt: string;
   lastRecord: string;
-
+  date: string;
   dashboard: {
     // [key: string]: string | number;
     //_id: string;
@@ -40,7 +40,7 @@ export const cashRegisterTemplate: CashRegisterIT = {
   createdAt: "",
   updatedAt: "",
   lastRecord: "",
-
+  date: "",
   dashboard: {
     //_id: "",
     date: "",
@@ -362,7 +362,7 @@ export const cashRegisterBasic: CashRegisterIT = {
   createdAt: "",
   updatedAt: "",
   lastRecord: "",
-
+  date: "",
   dashboard: {
     //_id: "",
     date: "",
