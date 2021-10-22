@@ -465,18 +465,24 @@ type StateIT = [CashRegisterIT];
 const Users = () => {
   const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState<StateIT>([cashRegisterTemplate]);
-  //console.log(state);
+  // console.log(state);
   const [nameState, setNameState] = useState("ninguno");
+
   const [initialDate, setInitialDate] = useState(
-    `${new Date().toISOString().substring(0, 11)}10:00`
+    `${new Date(Date.now() - 1000 * 60 * 60 * 4)
+      .toISOString()
+      .substring(0, 11)}00:00`
   );
+
   const [endingDate, setEndingDate] = useState(
-    `${new Date().toISOString().substring(0, 11)}23:59`
+    `${new Date(Date.now() - 1000 * 60 * 60 * 4)
+      .toISOString()
+      .substring(0, 11)}23:59`
   );
   let filtered = state?.filter(
     (i) =>
-      new Date(i.createdAt).getTime() >= new Date(initialDate).getTime() &&
-      new Date(i.createdAt).getTime() <= new Date(endingDate).getTime()
+      new Date(i.date).getTime() >= new Date(initialDate).getTime() &&
+      new Date(i.date).getTime() <= new Date(endingDate).getTime()
   );
   let balance = filtered.filter((i) => i.dashboard.server === nameState);
   let totalBalance =
@@ -486,7 +492,7 @@ const Users = () => {
   let totalExpense =
     nameState === "ninguno"
       ? 0
-      : state
+      : filtered
           .map((i) => i.expenses.find((e) => e.name === nameState)?.expense)
           .reduce((i: any, c) => i + c);
 
@@ -529,6 +535,7 @@ const Users = () => {
     minute: "2-digit",
     second: "2-digit",
   };
+
   return (
     <UsersSt>
       <DashboardSt>
@@ -540,7 +547,7 @@ const Users = () => {
             onChange={handleChangeName}
           >
             <option value="2021">2021</option>
-            <option value="2020">2020</option>
+            {/* <option value="2020">2020</option> */}
           </select>
         </section>
 
@@ -592,6 +599,7 @@ const Users = () => {
           <span className="cellDashboardTitle">Gastos</span>
           <span className="cellDashboardInput number ">
             {totalExpense && totalExpense.toFixed(2)}
+            {/* {totalExpense && totalExpense} */}
           </span>
         </section>
 
@@ -614,10 +622,19 @@ const Users = () => {
             {balance.map((i) => (
               <div className="tRow" key={i._id}>
                 <section className="cell">
-                  {new Date(i.createdAt).toLocaleDateString("es-ES", options)}
+                  {new Date(i.date).toLocaleDateString("es-ES", options)}
                 </section>
                 <section className="cell">{i.dashboard.server}</section>
-                <section className="cell">
+                <section
+                  className="cell"
+                  style={
+                    i.dashboard.balance < 0
+                      ? { color: "red" }
+                      : i.dashboard.balance > 0
+                      ? { color: "lime" }
+                      : { color: "#a3a3a3" }
+                  }
+                >
                   {i.dashboard.balance.toFixed(2)}
                 </section>
               </div>
@@ -637,7 +654,7 @@ const Users = () => {
             {filtered?.map((i) => (
               <div className="tRow" key={i._id}>
                 <section className="cell">
-                  {new Date(i.createdAt).toLocaleDateString("es-ES", options)}
+                  {new Date(i.date).toLocaleDateString("es-ES", options)}
                 </section>
                 <section className="cell">{i.dashboard.server}</section>
                 <section className="cell">
@@ -656,7 +673,8 @@ const Users = () => {
           </div>
         </div>
       </div>
-      {state.length === 1 ? <Spinner /> : null}    </UsersSt>
+      {state.length === 1 ? <Spinner /> : null}{" "}
+    </UsersSt>
   );
 };
 
