@@ -1,143 +1,217 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const MaintenanceSt = styled.nav`
   width: 100%;
   height: 100%;
-  color: white;
-  display: grid;
-  grid-template-columns: repeat(3, 32vw);
-  grid-auto-rows: 32vw;
-  gap: 0.2rem;
+  position: relative;
+  display: flex;
   justify-content: center;
-  align-content: flex-start;
-  overflow-y: scroll;
-  padding: 0.2rem;
-
-  .pc {
-    background: #131312;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    padding: 0 0.5rem;
-    position: relative;
-    :hover {
-      background: #5100ff;
-      .days {
-        color: red;
-      }
-    }
-    .number {
-      font-family: "Roboto 900";
-      font-size: 1rem;
-      position: absolute;
-      left: 0.5rem;
-      top: 0.3rem;
-    }
-    .details {
-      position: absolute;
-      left: 0.5rem;
-      bottom: 0.5rem;
-      width: 29vw;
-      display: flex;
-      flex-direction: column;
+  align-items: center;
+  .addPc {
+    width: 10rem;
+    height: 10rem;
+    background: red;
+    position: absolute;
+    /* right: 1rem; */
+    bottom: 1rem;
+    text-decoration: none;
+  }
+  .table {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-auto-rows: 2rem;
+    row-gap: 0.2rem;
+    background: #0c0c0c;
+    overflow-y: scroll;
+    border-right: 0.0625rem solid #333333;
+    .tRow {
+      display: grid;
+      grid-template-columns: 10% calc(25% - 1.6rem) 15% 15% 15% 10% 10%;
+      grid-template-rows: 100%;
+      column-gap: 0.2rem;
       justify-content: center;
-      align-items: center;
-      .specs {
-        width: 100%;
+      align-content: center;
+      &:hover {
+        background: #2f2f2f;
+        .cell {
+          background: #2f2f2f;
+        }
+      }
+      .cell {
+        background: #141414;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.3rem;
         font-family: "Roboto 300";
-        font-size: 0.5rem;
-        position: relative;
-        span {
-          position: absolute;
-          right: 0;
-          color: red;
+        font-size: 0.6rem;
+        color: white;
+        padding: 0 0.5rem;
+        overflow: hidden;
+        text-align: center;
+      }
+      .head {
+        background: #000000;
+        font-family: "Roboto 900";
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .sysIcon {
+          width: 100;
+          height: 100%;
+          justify-self: center;
+          align-self: center;
+          font-size: 1rem;
+        }
+        .text {
+          width: 60%;
+          height: 100%;
+          display: flex;
+          justify-content: start;
+          align-items: center;
+        }
+        .noneText {
+          display: none;
+        }
+      }
+      .none {
+        display: none;
+      }
+
+      .action {
+        background: #6200ff;
+        color: #ffffff;
+        cursor: pointer;
+        font-family: "Roboto 900";
+        text-decoration: none;
+        &:hover {
+          background: #ffffff;
+          color: #000000;
         }
       }
     }
-
-    .days {
-      position: absolute;
-      font-family: "Roboto 700";
-      font-size: 1.5rem;
-      right: 0.3rem;
-      top: 0.3rem;
-      color: red;
+    .tHead {
+      position: sticky;
+      top: 0;
+      background: #0c0c0c;
     }
   }
+
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 100%;
-    color: white;
-    display: grid;
-    grid-template-columns: repeat(8, 10rem);
-    grid-auto-rows: 10rem;
-    gap: 0.5rem;
+    position: relative;
+    display: flex;
     justify-content: center;
-    align-content: flex-start;
-    overflow-y: scroll;
-    padding: 1rem;
-
-    .pc {
-      background: #131312;
-      border-radius: 0.3rem;
-      cursor: pointer;
-      border: 0.0625rem solid #0a0a0a;
+    align-items: center;
+    .addPc {
+      width: 5rem;
+      height: 5rem;
+      background: #5500ff57;
+      position: absolute;
+      /* right: 1rem; */
+      bottom: 1rem;
+      border-radius: 100%;
+      font-family: "Roboto 100";
+      font-size: 4rem;
+      color: #ffffff7f;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
-      padding: 0 0.5rem;
-      position: relative;
-      :hover {
-        border: 0.0625rem solid #5100ff;
-        background: #5100ff;
-        .days {
-          color: red;
-        }
+      cursor: pointer;
+      &:hover {
+        background: #5500ff;
+        color: #ffffff;
       }
-      .number {
-        font-family: "Roboto 900";
-        font-size: 1.5rem;
-        position: absolute;
-        left: 0.5rem;
-        top: 0.5rem;
-      }
-      .details {
-        position: absolute;
-        left: 0.5rem;
-        bottom: 0.5rem;
-        width: 9rem;
-        display: flex;
-        flex-direction: column;
+    }
+    .table {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 100%;
+      grid-auto-rows: 2rem;
+      row-gap: 0.2rem;
+      background: #0c0c0c;
+      overflow-y: scroll;
+      border-right: 0.0625rem solid #333333;
+      position: relative;
+      .tRow {
+        display: grid;
+        grid-template-columns: 5% calc(10% - 2.5rem) 5% 5% 5% 10% 10% 10% 10% 10% 10% 5% 5%;
+        grid-template-rows: 100%;
+        column-gap: 0.2rem;
         justify-content: center;
-        align-items: center;
-        .specs {
-          width: 100%;
+        align-content: center;
+        &:hover {
+          background: #2f2f2f;
+          .cell {
+            background: #2f2f2f;
+          }
+        }
+        .cell {
+          background: #141414;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 0.3rem;
+          /* text-transform: capitalize; */
           font-family: "Roboto 300";
           font-size: 0.6rem;
-          position: relative;
-          span {
-            position: absolute;
-            right: 0;
-            color: red;
+          color: white;
+          padding: 0 0.5rem;
+          overflow: hidden;
+          text-align: center;
+        }
+        .head {
+          background: #000000;
+          font-family: "Roboto 900";
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .sysIcon {
+            width: 100;
+            height: 100%;
+            justify-self: center;
+            align-self: center;
+            font-size: 1rem;
+          }
+          .text {
+            width: 60%;
+            height: 100%;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+          }
+          .noneText {
+            display: none;
+          }
+        }
+        .none {
+          display: flex;
+        }
+
+        .action {
+          background: #6200ff;
+          color: #ffffff;
+          cursor: pointer;
+          font-family: "Roboto 900";
+          text-decoration: none;
+          &:hover {
+            background: #ffffff;
+            color: #000000;
           }
         }
       }
-
-      .days {
-        position: absolute;
-        font-family: "Roboto 700";
-        font-size: 1.5rem;
-        right: 0.5rem;
-        top: 0.5rem;
-        color: #5900ff;
+      .tHead {
+        position: sticky;
+        top: 0;
+        background: #0c0c0c;
       }
     }
   }
@@ -149,29 +223,44 @@ const Mantenimiento = () => {
   ];
   return (
     <MaintenanceSt>
-      {numbersPc.map((i) => (
-        <div className="pc" key={i}>
-          <h2 className="number">Pc {i}</h2>
-          <section className="details">
-            <p className="specs">Intel Core i5 6400</p>
-            <p className="specs">Ddr4 8Gb</p>
-            <p className="specs">H110 MSI</p>
-            <p className="specs">Gigabyte 500w Bronze</p>
-            <p className="specs">Zotac GTX 1060 6gb</p>
-            <p className="specs">Corsair Carbide Spec Alpha</p>
-            <p className="specs">
-              Gigabyte Mechanical <span>0</span>
-            </p>
-            <p className="specs">
-              Delux gt 206 <span>0</span>
-            </p>
-            <p className="specs">
-              Delux m506 <span>0</span>
-            </p>
-          </section>
-          <section className="days">0</section>
+      <div className="table">
+        <div className="tRow tHead">
+          <div className="cell head">Pc</div>
+          <div className="cell head">Días sin mantenimiento </div>
+          <div className="cell head">Audifono</div>
+          <div className="cell head">Teclado</div>
+          <div className="cell head">Mouse</div>
+          <div className="cell head none">Cpu</div>
+          <div className="cell head none">Ram</div>
+          <div className="cell head none">Mobo</div>
+          <div className="cell head none">Power</div>
+          <div className="cell head none">Gpu</div>
+          <div className="cell head none">Case</div>
+          <div className="cell head">Ver</div>
+          <div className="cell head">Editar</div>
         </div>
-      ))}
+        {numbersPc.map((i) => (
+          <div className="tRow" key={i}>
+            <div className="cell">PC{i}</div>
+            <div className="cell"></div>
+            <div className="cell"></div>
+            <div className="cell"></div>
+            <div className="cell"></div>
+            <div className="cell none"></div>
+            <div className="cell none"></div>
+            <div className="cell none"></div>
+            <div className="cell none"></div>
+            <div className="cell none"></div>
+            <div className="cell none"></div>
+            <Link className="cell" to="/admin/maintenance/watch/2323">Ver</Link>
+            <Link className="cell" to="/admin/maintenance/edit/2323">Editar</Link>
+
+          </div>
+        ))}
+      </div>
+      <Link className="addPc" to="/admin/maintenance/add-pc">
+        +
+      </Link>
     </MaintenanceSt>
   );
 };

@@ -56,7 +56,6 @@ const ReportsSt = styled.div`
         font-size: 0.6rem;
         color: white;
         padding: 0 0.5rem;
-        position: relative;
         overflow: hidden;
         text-align: center;
         /* .modified {
@@ -115,7 +114,6 @@ const ReportsSt = styled.div`
       background: #0c0c0c;
     }
   }
-  /* background: black; */
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;

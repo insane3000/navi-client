@@ -21,6 +21,8 @@ import User from "./pages/User";
 import Maintenance from "./pages/Maintenance";
 import { useEffect } from "react";
 import { loginServer } from "redux/actions/appAction";
+import AddPc from "./organisms/AddPc";
+import ListOfPc from "./pages/ListOfPc";
 const AdminSt = styled.div`
   width: 100%;
   height: 100%;
@@ -63,8 +65,11 @@ const Admin = () => {
           <Route path="/admin/user" component={User} />
         ) : null}
         {app.login.user !== "" ? (
-          <Route path="/admin/maintenance" component={Maintenance} />
+          <Route path="/admin/maintenance" component={ListOfPc} />
         ) : null}
+        {/* {app.login.user !== "" ? (
+          <Route path="/admin/maintenance/:id" component={AddPc} />
+        ) : null} */}
         {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
           <Route path="/admin/products" component={ListProducts} />
         ) : null}
