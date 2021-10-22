@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 // import axios from "axios";
 // *Redux
@@ -9,6 +9,7 @@ import { useHistory } from "react-router";
 // *Axios
 import { URI } from "config/axios";
 import Spinner from "./Spinner";
+// import { StoreInterface } from "interfaces/storeTemplate";
 //* INTERFACE APP
 // import { StoreInterface } from "interfaces/storeTemplate";
 
@@ -202,10 +203,12 @@ const AddProducts = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   // const app = useSelector((store: StoreInterface) => store.app);
+
   const [login, setLogin] = useState<LoginIT>(loginTemplate);
   const [spinner, setSpinner] = useState(false);
   const [errorUser, setErrorUser] = useState(false);
   // console.log(login);
+
   const handleAddProducts = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -222,7 +225,9 @@ const AddProducts = () => {
       .post(`${URI}/login`, login)
       .then(function (response: any) {
         dispatch(loginServer(response.data._id, response.data.token));
-        history.push(`/admin/cash-register`);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", response.data._id);
+        history.push(`admin/cash-register`);
         // console.log(response.data)
       })
       .catch(function (error) {
@@ -232,6 +237,11 @@ const AddProducts = () => {
       });
     // console.log(login);
   };
+  useEffect(() => {
+    if (localStorage.getItem("token") && localStorage.getItem("token") !== "") {
+      history.push(`/admin/cash-register`);
+    }
+  });
   return (
     <AddProductsSt onSubmit={handleSubmit}>
       <h2 className="titleAddProducts">Identificate</h2>

@@ -16,9 +16,11 @@ import Login from "./pages/Login";
 import ListProducts from "./pages/ListProducts";
 import UpdateProducts from "./organisms/UpdateProduct";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import User from "./pages/User";
 import Maintenance from "./pages/Maintenance";
+import { useEffect } from "react";
+import { loginServer } from "redux/actions/appAction";
 const AdminSt = styled.div`
   width: 100%;
   height: 100%;
@@ -32,23 +34,21 @@ const AdminSt = styled.div`
     grid-template-rows: 100%;
   }
 `;
-// const MobileSt = styled.div`
-//   width: 100%;
-//   height: 100%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   color: white;
-//   font-family: "Roboto 300";
-//   font-size: 2rem;
-//   // !Estilos para Desktop
-//   @media only screen and (min-width: 568px) {
-//     display: none;
-//   }
-// `;
 
 const Admin = () => {
+  const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
+
+  useEffect(() => {
+    if (localStorage.getItem("token") && localStorage.getItem("user")) {
+      dispatch(
+        loginServer(
+          `${localStorage.getItem("user")}`,
+          `${localStorage.getItem("token")}`
+        )
+      );
+    }
+  }, [dispatch]);
   return (
     <AdminSt id="admin">
       {/* <MobileSt>Voltea tu celular.</MobileSt> */}

@@ -1,6 +1,6 @@
 import { StoreInterface } from "interfaces/storeTemplate";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { useHistory } from "react-router";
@@ -15,6 +15,7 @@ import ChartsIcon from "icons/ChartIcon";
 import ServersIcon from "icons/ServersIcon";
 import LogoutIcon from "icons/LogoutIcon";
 import LoginIcon from "icons/LoginIcon";
+import { loginServer } from "redux/actions/appAction";
 const NavigationSt = styled.nav`
   width: 100%;
   height: 100%;
@@ -98,16 +99,18 @@ const NavigationSt = styled.nav`
     .activeNavLink {
       background: #6200ff;
       color: white;
-
     }
   }
 `;
 const Navigation = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const app = useSelector((store: StoreInterface) => store.app);
   const reloadPage = (e: any) => {
-    history.push(`/admin`);
-    window.location.reload();
+    dispatch(loginServer("", ""));
+    localStorage.setItem("token", "");
+    localStorage.setItem("user", "");
+    history.push(`admin/login`);
   };
   return (
     <NavigationSt>
