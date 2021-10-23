@@ -4,96 +4,113 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 // import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
 // *Axios
 import { URI } from "config/axios";
-
+import { Link } from "react-router-dom";
+// *Icons
+import CloseIcon from "icons/CloseIcon";
 const AddPcSt = styled.form`
   width: 100%;
   height: 100%;
   color: white;
-  background: red;
 
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
-    background: #0e0d0d;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
-    font-family: "Roboto 300";
-    font-size: 2rem;
+    background: #0e0d0d;
     position: relative;
-    border-right: 0.0625rem solid #333333;
-
     .close {
       position: absolute;
       top: 1rem;
       right: 1rem;
-      width: 2rem;
-      height: 2rem;
+      width: 4rem;
+      height: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-decoration: none;
       color: white;
-      font-size: 2rem;
-    }
-    .titleAddProducts {
-      width: 80%;
-      height: 3rem;
-      margin-bottom: 0.5rem;
-      color: white;
-      font-family: "Roboto 700";
-      font-size: 1.5rem;
-      text-align: center;
-      line-height: 3rem;
-      text-transform: uppercase;
+      font-size: 10rem;
       /* background: red; */
     }
-    .inputValue {
-      background: #050505;
-      width: 20rem;
-      height: 3rem;
-      margin-bottom: 1rem;
-      outline: none;
-      border-style: none;
-      padding: 0 1rem;
-      color: white;
-      font-family: "Roboto 300";
-      font-size: 1rem;
-      border: 0.0625rem solid #5100ff;
-      border-radius: 0.3rem;
+    .titleAddProducts {
+      font-family: "Roboto 900";
+      font-size: 3rem;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
     }
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    textarea:-webkit-autofill,
-    textarea:-webkit-autofill:hover,
-    textarea:-webkit-autofill:focus,
-    select:-webkit-autofill,
-    select:-webkit-autofill:hover,
-    select:-webkit-autofill:focus {
-      border: 1px solid #5100ff;
-      -webkit-text-fill-color: #ffffff71;
-      -webkit-box-shadow: 0 0 0px 1000px #000 inset;
-      box-shadow: 0 0 0px 1000px #000 inset;
-      transition: background-color 5000s ease-in-out 0s;
-    }
-    .date {
-      ::-webkit-calendar-picker-indicator {
-        filter: invert(1);
+    .containerPc {
+      display: grid;
+      grid-template-columns: 15rem 15rem 15rem 15rem 15rem;
+      grid-auto-rows: 5rem;
+      gap: 0.5rem;
+      justify-content: center;
+      align-content: center;
+
+      .cell {
+        /* background: red; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .subtitle {
+          width: 100%;
+          color: #5d5d5d;
+          text-align: left;
+          font-family: "Roboto 300";
+          font-size: 1rem;
+        }
+        .inputValue {
+          background: #050505;
+          width: 100%;
+          height: 3rem;
+          /* margin-bottom: 1rem; */
+          outline: none;
+          border-style: none;
+          padding: 0 1rem;
+          color: white;
+          font-family: "Roboto 300";
+          font-size: 1rem;
+          border: 0.0625rem solid #5100ff;
+          border-radius: 0.3rem;
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover,
+        textarea:-webkit-autofill:focus,
+        select:-webkit-autofill,
+        select:-webkit-autofill:hover,
+        select:-webkit-autofill:focus {
+          border: 1px solid #5100ff;
+          -webkit-text-fill-color: #ffffff71;
+          -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+          box-shadow: 0 0 0px 1000px #000 inset;
+          transition: background-color 5000s ease-in-out 0s;
+        }
+        .date {
+          ::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+          }
+        }
       }
     }
+
     .btnSubmit {
       background: #4400ff;
-      width: 20rem;
-      height: 3rem;
-      margin-bottom: 0.5rem;
+      width: 15rem;
+      height: 4rem;
+      margin-top: 2rem;
       outline: none;
       border-style: none;
       padding: 0 1rem;
       color: #ffffff;
       font-family: "Roboto 300";
-      font-size: 1rem;
+      font-size: 1.5rem;
       cursor: pointer;
       border-radius: 0.3rem;
     }
@@ -126,67 +143,27 @@ const pcTemplate = {
   gpu: "",
   case: "",
 };
-const Addpc = (e: React.FormEvent<HTMLFormElement>) => {
-  const history = useHistory();
+const AddPc = () => {
   const app = useSelector((store: StoreInterface) => store.app);
-  const [addPc, setAddPc] = useState<PcIT>(pcTemplate);
-  const [maintenanceDate, setMaintenanceDate] = useState(
-    `${new Date(Date.now() - 1000 * 60 * 60 * 4)
-      .toISOString()
-      .substring(0, 11)}00:00`
-  );
-  const [headSetDate, setHeadSetDate] = useState(
-    `${new Date(Date.now() - 1000 * 60 * 60 * 4)
-      .toISOString()
-      .substring(0, 11)}00:00`
-  );
-  const [keyboardDate, setKeyboardDate] = useState(
-    `${new Date(Date.now() - 1000 * 60 * 60 * 4)
-      .toISOString()
-      .substring(0, 11)}00:00`
-  );
-  const [mouseDate, setMouseDate] = useState(
-    `${new Date(Date.now() - 1000 * 60 * 60 * 4)
-      .toISOString()
-      .substring(0, 11)}00:00`
-  );
-  // addPc.maintenanceDate = maintenanceDate
-  console.log(addPc);
-  // !Handle Set date
-  const handleMaintenanceDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMaintenanceDate(e.target.value);
-  };
-  // !Handle Set Headset
-  const handleHeadSetDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHeadSetDate(e.target.value);
-  };
-  // !Handle Set Keyboard
-  const handleKeyboardDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyboardDate(e.target.value);
-  };
-  // !Handle Set Mouse
-  const handleMouseDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMouseDate(e.target.value);
-  };
+  const [state, setState] = useState<PcIT>(pcTemplate);
+  // console.log(state);
+
   // !Handle Change
-  const handleAddProducts = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
-    setAddPc({
-      ...addPc,
+    setState({
+      ...state,
       [name]: value,
     });
   };
 
-  if (app.login.user === "") {
-    history.push(`/admin`);
-    window.location.reload();
-  }
   // !Handle Submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(state);
     await axios
-      .post(`${URI}/products`, addPc, {
+      .post(`${URI}/computer`, state, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
@@ -197,159 +174,164 @@ const Addpc = (e: React.FormEvent<HTMLFormElement>) => {
       .catch(function (error) {
         console.log(error);
       });
-    setAddPc(pcTemplate);
-    // props.fetchData();
+    // setState(pcTemplate);
   };
   return (
     <AddPcSt onSubmit={handleSubmit}>
       <h2 className="titleAddProducts">Agregar Pc</h2>
-      <input
-        className="inputValue"
-        type="text"
-        name="name"
-        placeholder="Nombre del pc."
-        onChange={handleAddProducts}
-        value={addPc.name}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-
-      <input
-        className="inputValue date"
-        type="datetime-local"
-        name="maintenanceDate"
-        placeholder="Mantenimiento."
-        onChange={handleMaintenanceDate}
-        value={maintenanceDate}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue date"
-        type="datetime-local"
-        name="maintenanceDate"
-        placeholder="Mantenimiento."
-        onChange={handleHeadSetDate}
-        value={headSetDate}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue date"
-        type="datetime-local"
-        name="maintenanceDate"
-        placeholder="Mantenimiento."
-        onChange={handleKeyboardDate}
-        value={keyboardDate}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue date"
-        type="datetime-local"
-        name="maintenanceDate"
-        placeholder="Mantenimiento."
-        onChange={handleMouseDate}
-        value={mouseDate}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue"
-        type="text"
-        name="headset"
-        placeholder="Cambio de audifonos."
-        onChange={handleAddProducts}
-        value={addPc.headset}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue"
-        type="text"
-        name="keyboard"
-        placeholder="Cambio de teclado."
-        onChange={handleAddProducts}
-        value={addPc.keyboard}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue"
-        type="text"
-        name="mouse"
-        placeholder="Cambio de mouse."
-        onChange={handleAddProducts}
-        value={addPc.mouse}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue"
-        type="text"
-        name="cpu"
-        placeholder="Cpu."
-        onChange={handleAddProducts}
-        value={addPc.cpu}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue"
-        type="text"
-        name="ram"
-        placeholder="Ram."
-        onChange={handleAddProducts}
-        value={addPc.ram}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue"
-        type="text"
-        name="mobo"
-        placeholder="Motherboard."
-        onChange={handleAddProducts}
-        value={addPc.mobo}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue"
-        type="text"
-        name="power"
-        placeholder="Power."
-        onChange={handleAddProducts}
-        value={addPc.power}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue"
-        type="text"
-        name="gpu"
-        placeholder="Gpu."
-        onChange={handleAddProducts}
-        value={addPc.gpu}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-      <input
-        className="inputValue"
-        type="text"
-        name="case"
-        placeholder="Case."
-        onChange={handleAddProducts}
-        value={addPc.case}
-        onFocus={(e) => e.target.select()}
-        required
-      />
-
+      <div className="containerPc">
+        <section className="cell">
+          <span className="subtitle">Nombre:</span>
+          <input
+            className="inputValue"
+            type="text"
+            name="name"
+            placeholder="Nombre del pc."
+            onChange={handleChange}
+            value={state.name}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Ultimo mantenimiento:</span>
+          <input
+            className="inputValue date"
+            type="datetime-local"
+            name="maintenanceDate"
+            placeholder="Mantenimiento."
+            onChange={handleChange}
+            value={state.maintenanceDate}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Cambio de Audifono:</span>
+          <input
+            className="inputValue date"
+            type="datetime-local"
+            name="headset"
+            placeholder="Mantenimiento."
+            onChange={handleChange}
+            value={state.headset}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Cambio de Teclado:</span>
+          <input
+            className="inputValue date"
+            type="datetime-local"
+            name="keyboard"
+            placeholder="Mantenimiento."
+            onChange={handleChange}
+            value={state.keyboard}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Cambio de Mouse:</span>
+          <input
+            className="inputValue date"
+            type="datetime-local"
+            name="mouse"
+            placeholder="Mantenimiento."
+            onChange={handleChange}
+            value={state.mouse}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Cpu:</span>
+          <input
+            className="inputValue"
+            type="text"
+            name="cpu"
+            placeholder="Cpu."
+            onChange={handleChange}
+            value={state.cpu}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Ram:</span>
+          <input
+            className="inputValue"
+            type="text"
+            name="ram"
+            placeholder="Ram."
+            onChange={handleChange}
+            value={state.ram}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Motherboard:</span>
+          <input
+            className="inputValue"
+            type="text"
+            name="mobo"
+            placeholder="Motherboard."
+            onChange={handleChange}
+            value={state.mobo}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Fuente de poder:</span>
+          <input
+            className="inputValue"
+            type="text"
+            name="power"
+            placeholder="Power."
+            onChange={handleChange}
+            value={state.power}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Tarjeta de video:</span>
+          <input
+            className="inputValue"
+            type="text"
+            name="gpu"
+            placeholder="Gpu."
+            onChange={handleChange}
+            value={state.gpu}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+        <section className="cell">
+          <span className="subtitle">Case:</span>
+          <input
+            className="inputValue"
+            type="text"
+            name="case"
+            placeholder="Case."
+            onChange={handleChange}
+            value={state.case}
+            onFocus={(e) => e.target.select()}
+            //required
+          />
+        </section>
+      </div>
       <button className="btnSubmit" type="submit">
         Guardar
       </button>
+      <Link className="close" to="/admin/maintenance">
+        <CloseIcon />
+      </Link>
     </AddPcSt>
   );
 };
 
-export default Addpc;
+export default AddPc;

@@ -18,10 +18,10 @@ import UpdateProducts from "./organisms/UpdateProduct";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import User from "./pages/User";
-import Maintenance from "./pages/Maintenance";
+// import Maintenance from "./pages/Maintenance";
 import { useEffect } from "react";
 import { loginServer } from "redux/actions/appAction";
-import AddPc from "./organisms/AddPc";
+// import AddPc from "./organisms/AddPc";
 import ListOfPc from "./pages/ListOfPc";
 const AdminSt = styled.div`
   width: 100%;

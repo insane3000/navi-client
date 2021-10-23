@@ -489,12 +489,18 @@ const Users = () => {
     balance.length > 0
       ? balance.map((i) => i.dashboard.balance).reduce((i, c) => i + c)
       : 0;
+  let filteredValidation =
+    filtered.map((i) => i.expenses.find((e) => e.name === nameState)?.expense)
+      .length === 0
+      ? [0]
+      : filtered.map(
+          (i) => i.expenses.find((e) => e.name === nameState)?.expense
+        );
+
   let totalExpense =
     nameState === "ninguno"
       ? 0
-      : filtered
-          .map((i) => i.expenses.find((e) => e.name === nameState)?.expense)
-          .reduce((i: any, c) => i + c);
+      : filteredValidation.reduce((i: any, c) => i + c);
 
   const handleChangeName = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setNameState(e.target.value);

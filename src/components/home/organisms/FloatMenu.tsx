@@ -30,10 +30,10 @@ const FloatMenuSt = styled.div`
     width: 2.5rem;
     height: 2.5rem;
     position: absolute;
-    left: 85%;
+    left: 84%;
     top: 1rem;
     color: black;
-    padding: 0.5rem;
+    padding: 0.2rem;
     border-radius: 100%;
     cursor: pointer;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,

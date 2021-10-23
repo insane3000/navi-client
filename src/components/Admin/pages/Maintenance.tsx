@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+// *Axios
+import { URI } from "config/axios";
+import { useSelector } from "react-redux";
+import { StoreInterface } from "interfaces/storeTemplate";
+import axios from "axios";
 
 const MaintenanceSt = styled.nav`
   width: 100%;
@@ -36,7 +41,7 @@ const MaintenanceSt = styled.nav`
       justify-content: center;
       align-content: center;
       &:hover {
-        background: #2f2f2f;
+        /* background: #2f2f2f; */
         .cell {
           background: #2f2f2f;
         }
@@ -143,13 +148,13 @@ const MaintenanceSt = styled.nav`
       position: relative;
       .tRow {
         display: grid;
-        grid-template-columns: 5% calc(10% - 2.5rem) 5% 5% 5% 10% 10% 10% 10% 10% 10% 5% 5%;
+        grid-template-columns: 5% calc(13% - 2.5rem) 9% 9% 9% 7.5% 7.5% 7.5% 7.5% 7.5% 7.5% 5% 5%;
         grid-template-rows: 100%;
         column-gap: 0.2rem;
         justify-content: center;
         align-content: center;
         &:hover {
-          background: #2f2f2f;
+          /* background: #2f2f2f; */
           .cell {
             background: #2f2f2f;
           }
@@ -162,15 +167,26 @@ const MaintenanceSt = styled.nav`
           border-radius: 0.3rem;
           /* text-transform: capitalize; */
           font-family: "Roboto 300";
-          font-size: 0.6rem;
+          font-size: 0.8rem;
           color: white;
           padding: 0 0.5rem;
           overflow: hidden;
           text-align: center;
+          .number {
+            color: red;
+            margin-right: 0.5rem;
+            font-family: "Roboto 900";
+            font-size: 1.5rem;
+          }
+          .text {
+            color: #747474;
+            font-size: 0.6rem;
+          }
         }
         .head {
           background: #000000;
           font-family: "Roboto 900";
+          font-size: 0.8rem;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -216,20 +232,76 @@ const MaintenanceSt = styled.nav`
     }
   }
 `;
+type PcIT = [
+  {
+    _id: string;
+    name: string;
+    maintenanceDate: string;
+    headset: string;
+    keyboard: string;
+    mouse: string;
+    cpu: string;
+    ram: string;
+    mobo: string;
+    power: string;
+    gpu: string;
+    case: string;
+  }
+];
 const Mantenimiento = () => {
-  const numbersPc = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
-  ];
+  const app = useSelector((store: StoreInterface) => store.app);
+
+  const [state, setState] = useState<PcIT>();
+  // console.log(state);
+  // const numbersPc = [
+  //   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+  //   22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+  // ];
+  const fetchData = async () => {
+    await axios
+      .get(`${URI}/computer`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
+      .then(function (response: any) {
+        setState(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const options: Intl.DateTimeFormatOptions = {
+    // weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    // hour: "2-digit",
+    // minute: "2-digit",
+    // second: "2-digit",
+  };
+  // const handleUpdate = async (_id: string) => {
+  //   history.push(`/admin/update-product/${_id}`);
+  // };
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  function TimeRemaining(date: string) {
+    return Math.floor(
+      (Date.now() - new Date(date).getTime()) / 1000 / 60 / 60 / 24 / 30
+    ).toString();
+  }
   return (
     <MaintenanceSt>
       <div className="table">
         <div className="tRow tHead">
           <div className="cell head">Pc</div>
-          <div className="cell head">Días sin mantenimiento </div>
-          <div className="cell head">Audifono</div>
-          <div className="cell head">Teclado</div>
-          <div className="cell head">Mouse</div>
+          <div className="cell head">Mantenimiento </div>
+          <div className="cell head">Cambio Audifono</div>
+          <div className="cell head">Cambio Teclado</div>
+          <div className="cell head">Cambio Mouse</div>
           <div className="cell head none">Cpu</div>
           <div className="cell head none">Ram</div>
           <div className="cell head none">Mobo</div>
@@ -239,22 +311,48 @@ const Mantenimiento = () => {
           <div className="cell head">Ver</div>
           <div className="cell head">Editar</div>
         </div>
-        {numbersPc.map((i) => (
-          <div className="tRow" key={i}>
-            <div className="cell">PC{i}</div>
-            <div className="cell"></div>
-            <div className="cell"></div>
-            <div className="cell"></div>
-            <div className="cell"></div>
-            <div className="cell none"></div>
-            <div className="cell none"></div>
-            <div className="cell none"></div>
-            <div className="cell none"></div>
-            <div className="cell none"></div>
-            <div className="cell none"></div>
-            <Link className="cell" to="/admin/maintenance/watch/2323">Ver</Link>
-            <Link className="cell" to="/admin/maintenance/edit/2323">Editar</Link>
-
+        {state?.map((i) => (
+          <div className="tRow" key={i._id}>
+            <div className="cell">{i.name}</div>
+            <div className="cell">
+              <span
+                className="number"
+                style={
+                  parseInt(TimeRemaining(i.maintenanceDate)) <= 6
+                    ? { color: "lime" }
+                    : parseInt(TimeRemaining(i.maintenanceDate)) >= 7
+                    ? { color: "red" }
+                    : { color: "#ffffff" }
+                }
+              >
+                {TimeRemaining(i.maintenanceDate)}
+              </span>
+              <span className="text">meses</span>
+            </div>
+            <div className="cell">
+              <span className="number">{TimeRemaining(i.headset)}</span>
+              <span className="text">meses</span>
+            </div>
+            <div className="cell">
+              <span className="number">{TimeRemaining(i.keyboard)}</span>
+              <span className="text">meses</span>
+            </div>
+            <div className="cell">
+              <span className="number">{TimeRemaining(i.mouse)}</span>
+              <span className="text">meses</span>
+            </div>
+            <div className="cell none">{i.cpu}</div>
+            <div className="cell none">{i.ram}</div>
+            <div className="cell none">{i.mobo}</div>
+            <div className="cell none">{i.power}</div>
+            <div className="cell none">{i.gpu}</div>
+            <div className="cell none">{i.case}</div>
+            <Link className="cell" to="/admin/maintenance/watch/2323">
+              Ver
+            </Link>
+            <Link className="cell" to={`/admin/maintenance/edit/${i._id}`}>
+              Editar
+            </Link>
           </div>
         ))}
       </div>
