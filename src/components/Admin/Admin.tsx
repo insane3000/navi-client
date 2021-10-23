@@ -10,6 +10,7 @@ import Check from "components/Admin/pages/Check";
 import Watch from "components/Admin/pages/Watch";
 import Charts from "./pages/Charts";
 import Charts02 from "./pages/Charts02";
+import Charts03 from "./pages/Charts03";
 import Users from "./pages/Servers";
 import AddProducts from "./pages/AddProducts";
 import Login from "./pages/Login";
@@ -87,6 +88,9 @@ const Admin = () => {
         ) : null}
         {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
           <Route path="/admin/charts02/" component={Charts02} />
+        ) : null}
+        {app.login.user !== "" ? (
+          <Route path="/admin/charts03/" component={Charts03} />
         ) : null}
         {app.login.user !== "" ? (
           <Route path="/admin/servers/" component={Users} />

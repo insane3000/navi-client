@@ -6,7 +6,11 @@ import { URI } from "config/axios";
 import { useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 import axios from "axios";
-
+// *icons
+import DeleteIcon from "icons/DeleteIcon";
+// import WatchIcon from "icons/WatchIcon";
+import EditIcon from "icons/EditIcon";
+import Spinner from "./Spinner";
 const MaintenanceSt = styled.nav`
   width: 100%;
   height: 100%;
@@ -14,14 +18,27 @@ const MaintenanceSt = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   .addPc {
-    width: 10rem;
-    height: 10rem;
-    background: red;
+    width: 5rem;
+    height: 5rem;
+    background: #00000056;
     position: absolute;
     /* right: 1rem; */
     bottom: 1rem;
+    border-radius: 100%;
+    font-family: "Roboto 100";
+    font-size: 4rem;
+    color: #ffffff7f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
     text-decoration: none;
+    &:hover {
+      background: #5500ff;
+      color: #ffffff;
+    }
   }
   .table {
     width: 100%;
@@ -54,15 +71,26 @@ const MaintenanceSt = styled.nav`
         align-items: center;
         border-radius: 0.3rem;
         font-family: "Roboto 300";
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         color: white;
         padding: 0 0.5rem;
         overflow: hidden;
         text-align: center;
+        .number {
+          color: red;
+          margin-right: 0.2rem;
+          font-family: "Roboto 900";
+          font-size: 1.3rem;
+        }
+        .text {
+          color: #747474;
+          font-size: 0.6rem;
+        }
       }
       .head {
         background: #000000;
         font-family: "Roboto 900";
+        font-size: 0.6rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -118,7 +146,7 @@ const MaintenanceSt = styled.nav`
     .addPc {
       width: 5rem;
       height: 5rem;
-      background: #5500ff57;
+      background: #00000056;
       position: absolute;
       /* right: 1rem; */
       bottom: 1rem;
@@ -232,6 +260,103 @@ const MaintenanceSt = styled.nav`
     }
   }
 `;
+const WarningSt = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #080808;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  .warningComponent {
+    width: 20rem;
+    height: 20rem;
+    background: #131212;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3rem;
+    .title {
+      font-family: "Roboto 100";
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .buttons {
+      width: 20rem;
+      height: 4rem;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      .btn {
+        width: 6rem;
+        height: 3rem;
+        border-style: none;
+        outline: none;
+        font-family: "Roboto 300";
+        font-size: 1.5rem;
+        border-radius: 0.2rem;
+        cursor: pointer;
+        &:hover {
+          background: #6200ff;
+          color: white;
+        }
+      }
+    }
+  }
+  @media only screen and (min-width: 568px) {
+    width: 100%;
+    height: 100%;
+    background: #080808;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    .warningComponent {
+      width: 30rem;
+      height: 15rem;
+      background: #131212;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.3rem;
+      .title {
+        font-family: "Roboto 100";
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+      .buttons {
+        width: 25rem;
+        height: 4rem;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        .btn {
+          width: 10rem;
+          height: 3rem;
+          border-style: none;
+          outline: none;
+          font-family: "Roboto 300";
+          font-size: 1.5rem;
+          border-radius: 0.2rem;
+          cursor: pointer;
+          &:hover {
+            background: #6200ff;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+`;
 type PcIT = [
   {
     _id: string;
@@ -252,11 +377,9 @@ const Mantenimiento = () => {
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState<PcIT>();
-  // console.log(state);
-  // const numbersPc = [
-  //   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-  //   22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
-  // ];
+  const [deleteId, setDeleteId] = useState("");
+  const [modal, setModal] = useState(false);
+
   const fetchData = async () => {
     await axios
       .get(`${URI}/computer`, {
@@ -272,15 +395,6 @@ const Mantenimiento = () => {
       });
   };
 
-  const options: Intl.DateTimeFormatOptions = {
-    // weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    // hour: "2-digit",
-    // minute: "2-digit",
-    // second: "2-digit",
-  };
   // const handleUpdate = async (_id: string) => {
   //   history.push(`/admin/update-product/${_id}`);
   // };
@@ -293,6 +407,27 @@ const Mantenimiento = () => {
       (Date.now() - new Date(date).getTime()) / 1000 / 60 / 60 / 24 / 30
     ).toString();
   }
+  // !Modal Function
+  const handleModal = (
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    id: any
+  ) => {
+    setDeleteId(id);
+    setModal(!modal);
+  };
+  // !Delete Function
+  const handleDelete = async () => {
+    await axios
+      .delete(`${URI}/computer/${deleteId}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
+      .then(() => {
+        fetchData();
+        setModal(!modal);
+      });
+  };
   return (
     <MaintenanceSt>
       <div className="table">
@@ -308,7 +443,7 @@ const Mantenimiento = () => {
           <div className="cell head none">Power</div>
           <div className="cell head none">Gpu</div>
           <div className="cell head none">Case</div>
-          <div className="cell head">Ver</div>
+          <div className="cell head">Borrar</div>
           <div className="cell head">Editar</div>
         </div>
         {state?.map((i) => (
@@ -318,9 +453,9 @@ const Mantenimiento = () => {
               <span
                 className="number"
                 style={
-                  parseInt(TimeRemaining(i.maintenanceDate)) <= 6
+                  parseInt(TimeRemaining(i.maintenanceDate)) <= 9
                     ? { color: "lime" }
-                    : parseInt(TimeRemaining(i.maintenanceDate)) >= 7
+                    : parseInt(TimeRemaining(i.maintenanceDate)) > 9
                     ? { color: "red" }
                     : { color: "#ffffff" }
                 }
@@ -330,15 +465,48 @@ const Mantenimiento = () => {
               <span className="text">meses</span>
             </div>
             <div className="cell">
-              <span className="number">{TimeRemaining(i.headset)}</span>
+              <span
+                className="number"
+                style={
+                  parseInt(TimeRemaining(i.headset)) <= 9
+                    ? { color: "lime" }
+                    : parseInt(TimeRemaining(i.headset)) > 9
+                    ? { color: "red" }
+                    : { color: "#ffffff" }
+                }
+              >
+                {TimeRemaining(i.headset)}
+              </span>
               <span className="text">meses</span>
             </div>
             <div className="cell">
-              <span className="number">{TimeRemaining(i.keyboard)}</span>
+              <span
+                className="number"
+                style={
+                  parseInt(TimeRemaining(i.keyboard)) <= 9
+                    ? { color: "lime" }
+                    : parseInt(TimeRemaining(i.keyboard)) > 9
+                    ? { color: "red" }
+                    : { color: "#ffffff" }
+                }
+              >
+                {TimeRemaining(i.keyboard)}
+              </span>
               <span className="text">meses</span>
             </div>
             <div className="cell">
-              <span className="number">{TimeRemaining(i.mouse)}</span>
+              <span
+                className="number"
+                style={
+                  parseInt(TimeRemaining(i.mouse)) <= 9
+                    ? { color: "lime" }
+                    : parseInt(TimeRemaining(i.mouse)) > 9
+                    ? { color: "red" }
+                    : { color: "#ffffff" }
+                }
+              >
+                {TimeRemaining(i.mouse)}
+              </span>
               <span className="text">meses</span>
             </div>
             <div className="cell none">{i.cpu}</div>
@@ -347,18 +515,56 @@ const Mantenimiento = () => {
             <div className="cell none">{i.power}</div>
             <div className="cell none">{i.gpu}</div>
             <div className="cell none">{i.case}</div>
-            <Link className="cell" to="/admin/maintenance/watch/2323">
+            {/* <Link className="cell" to="/admin/maintenance/watch/2323">
               Ver
-            </Link>
-            <Link className="cell" to={`/admin/maintenance/edit/${i._id}`}>
+            </Link> */}
+            {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+              <section
+                className="cell head action"
+                onClick={(e) => handleModal(e, i._id)}
+              >
+                <DeleteIcon className="sysIcon" />
+                <span className="text noneText">Borrar</span>
+              </section>
+            ) : (
+              <span className="cell">-</span>
+            )}
+            {/* <Link className="cell" to={`/admin/maintenance/edit/${i._id}`}>
               Editar
-            </Link>
+            </Link> */}
+            {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+              <Link
+                className="cell  head action"
+                to={`/admin/maintenance/edit/${i._id}`}
+              >
+                <EditIcon className="sysIcon" />
+                <span className="text noneText">Editar</span>
+              </Link>
+            ) : (
+              <span className="cell">-</span>
+            )}
           </div>
         ))}
       </div>
       <Link className="addPc" to="/admin/maintenance/add-pc">
         +
       </Link>
+      {modal && (
+        <WarningSt>
+          <div className="warningComponent">
+            <h2 className="title">¿Estás seguro?</h2>
+            <section className="buttons">
+              <button className="btn" onClick={() => setModal(!modal)}>
+                No
+              </button>
+              <button className="btn" onClick={handleDelete}>
+                Si
+              </button>
+            </section>
+          </div>
+        </WarningSt>
+      )}
+      {!state && <Spinner />}
     </MaintenanceSt>
   );
 };

@@ -21,7 +21,7 @@ const NavigationSt = styled.nav`
   height: 100%;
   display: grid;
   /* grid-template-columns: repeat(auto-fit, 2.5rem); */
-  grid-template-columns: 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
+  grid-template-columns: 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
   grid-auto-rows: 2.5rem;
   gap: 0.2rem;
   justify-content: start;
@@ -194,6 +194,16 @@ const Navigation = () => {
         >
           <ChartsIcon className="sysIcon" />
           <span className="text none">Charts 02</span>
+        </NavLink>
+      ) : null}
+      {app.login.user !== ""  ? (
+        <NavLink
+          className="navLink"
+          activeClassName="activeNavLink"
+          to="/admin/charts03"
+        >
+          <ChartsIcon className="sysIcon" />
+          <span className="text none">Ventas</span>
         </NavLink>
       ) : null}
       {app.login.user !== "" ? (

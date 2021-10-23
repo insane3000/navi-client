@@ -12,7 +12,104 @@ import CloseIcon from "icons/CloseIcon";
 const AddPcSt = styled.form`
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #0e0d0d;
+  position: relative;
   color: white;
+  .close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 10rem;
+  }
+  .titleAddProducts {
+    font-family: "Roboto 900";
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .containerPc {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 45% 45%;
+    grid-auto-rows: 4rem;
+    gap: 0.5rem;
+    justify-content: center;
+    align-content: center;
+    .cell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .subtitle {
+        width: 100%;
+        color: #5d5d5d;
+        text-align: left;
+        font-family: "Roboto 300";
+        font-size: 1rem;
+      }
+      .inputValue {
+        background: #050505;
+        width: 100%;
+        height: 3rem;
+        /* margin-bottom: 1rem; */
+        outline: none;
+        border-style: none;
+        padding: 0 .5rem;
+        color: white;
+        font-family: "Roboto 300";
+        font-size: 1rem;
+        border: 0.0625rem solid #5100ff;
+        border-radius: 0.3rem;
+      }
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      textarea:-webkit-autofill,
+      textarea:-webkit-autofill:hover,
+      textarea:-webkit-autofill:focus,
+      select:-webkit-autofill,
+      select:-webkit-autofill:hover,
+      select:-webkit-autofill:focus {
+        border: 1px solid #5100ff;
+        -webkit-text-fill-color: #ffffff71;
+        -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+        box-shadow: 0 0 0px 1000px #000 inset;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+      .date {
+        ::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+        }
+      }
+    }
+  }
+
+  .btnSubmit {
+    background: #4400ff;
+    width: 15rem;
+    height: 4rem;
+    margin-top: 2rem;
+    outline: none;
+    border-style: none;
+    padding: 0 1rem;
+    color: #ffffff;
+    font-family: "Roboto 300";
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 0.3rem;
+  }
 
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -174,7 +271,7 @@ const AddPc = () => {
       .catch(function (error) {
         console.log(error);
       });
-    // setState(pcTemplate);
+    setState(pcTemplate);
   };
   return (
     <AddPcSt onSubmit={handleSubmit}>

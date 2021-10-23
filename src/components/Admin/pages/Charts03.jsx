@@ -75,9 +75,9 @@ const Charts = () => {
     // second: "2-digit",
   };
   const validationQuantity = (x, value) => {
-    return x.sales.find((e) => e.name === value).profit === undefined
+    return x.sales.find((e) => e.name === value).sales === undefined
       ? 0
-      : x.sales.find((e) => e.name === value).profit;
+      : x.sales.find((e) => e.name === value).sales;
   };
 
   let charts = [];
@@ -142,21 +142,21 @@ const Charts = () => {
     return [...acumulador, valorActual];
   }, []);
 
-  const totalProfits = algoritm.map(
-    (i) =>
-      (!i.popularesProfit ? 0 : i.popularesProfit) +
-      (!i.monsterProfit ? 0 : i.monsterProfit) +
-      (!i.voltProfit ? 0 : i.voltProfit) +
-      (!i.maltaProfit ? 0 : i.maltaProfit) +
-      (!i.jugoProfit ? 0 : i.jugoProfit) +
-      (!i.aloeVeraProfit ? 0 : i.aloeVeraProfit) +
-      (!i.redbullProfit ? 0 : i.redbullProfit) +
-      (!i.agua2lProfit ? 0 : i.agua2lProfit) +
-      (!i.agua6lProfit ? 0 : i.agua6lProfit) +
-      (!i.chisitosProfit ? 0 : i.chisitosProfit) +
-      (!i.papelProfit ? 0 : i.papelProfit) +
-      (!i.marilanProfit ? 0 : i.marilanProfit)
-  );
+  // const totalProfits = algoritm.map(
+  //   (i) =>
+  //     (!i.popularesProfit ? 0 : i.popularesProfit) +
+  //     (!i.monsterProfit ? 0 : i.monsterProfit) +
+  //     (!i.voltProfit ? 0 : i.voltProfit) +
+  //     (!i.maltaProfit ? 0 : i.maltaProfit) +
+  //     (!i.jugoProfit ? 0 : i.jugoProfit) +
+  //     (!i.aloeVeraProfit ? 0 : i.aloeVeraProfit) +
+  //     (!i.redbullProfit ? 0 : i.redbullProfit) +
+  //     (!i.agua2lProfit ? 0 : i.agua2lProfit) +
+  //     (!i.agua6lProfit ? 0 : i.agua6lProfit) +
+  //     (!i.chisitosProfit ? 0 : i.chisitosProfit) +
+  //     (!i.papelProfit ? 0 : i.papelProfit) +
+  //     (!i.marilanProfit ? 0 : i.marilanProfit)
+  // );
 
   let date = algoritm.map((i) => i.date);
   let popularesProfit = algoritm.map((i) => i.popularesProfit);
@@ -179,13 +179,13 @@ const Charts = () => {
   }, []);
 
   const complete = [
-    {
-      label: "Total Ganancias",
-      data: totalProfits,
-      fill: false,
-      backgroundColor: "rgb(255, 0, 76)",
-      borderColor: "rgb(255, 0, 76)",
-    },
+    // {
+    //   label: "Total Ganancias",
+    //   data: totalProfits,
+    //   fill: false,
+    //   backgroundColor: "rgb(255, 0, 76)",
+    //   borderColor: "rgb(255, 0, 76)",
+    // },
     {
       label: "Populares",
       data: popularesProfit,
