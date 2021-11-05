@@ -350,7 +350,7 @@ const Reports = () => {
 
   const fetchData = () => {
     axios
-      .get(`${URI}/cash-register`, {
+      .get(`${URI}/reports`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },

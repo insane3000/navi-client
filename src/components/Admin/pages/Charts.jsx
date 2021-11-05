@@ -51,7 +51,7 @@ const Charts = () => {
   const app = useSelector((store) => store.app);
   const fetchData = () => {
     axios
-      .get(`${URI}/cash-register`, {
+      .get(`${URI}/charts-anual`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
