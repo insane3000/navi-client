@@ -818,7 +818,7 @@ const CashRegisterMain = () => {
         <section className="cellDashboard">
           <span className="cellDashboardTitle">fecha</span>
           <section className="cellDashboardInput date">
-            {new Date(state.createdAt).toLocaleDateString("es-ES", options)}
+            {new Date(state.date).toLocaleDateString("es-ES", options)}
           </section>
         </section>
         <section className="cellDashboard">

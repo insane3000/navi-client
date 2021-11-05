@@ -435,7 +435,18 @@ const Reports = () => {
                   : { color: "#a3a3a3" }
               }
             >
-              {i.dashboard.balance.toFixed(2)}
+              {i.dashboard.balance === 0 ? (
+                <span
+                  style={{
+                    color: "orange",
+                    fontFamily: "#ff9d00"
+                  }}
+                >
+                  Perfect !
+                </span>
+              ) : (
+                i.dashboard.balance.toFixed(2)
+              )}
             </section>
             <Link className="cell head action" to={`/admin/watch/${i._id}`}>
               <WatchIcon className="sysIcon" />
