@@ -15,13 +15,17 @@ import ChartsIcon from "icons/ChartIcon";
 import ServersIcon from "icons/ServersIcon";
 import LogoutIcon from "icons/LogoutIcon";
 import LoginIcon from "icons/LoginIcon";
+import WifiIcon2 from "icons/WifiIcon2";
+
 import { loginServer } from "redux/actions/appAction";
+// import { FaFileInvoice } from "react-icons/fa";
+import InvoiceIcon from "icons/InvoiceIcon";
 const NavigationSt = styled.nav`
   width: 100%;
   height: 100%;
   display: grid;
   /* grid-template-columns: repeat(auto-fit, 2.5rem); */
-  grid-template-columns: 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
+  grid-template-columns: 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
   grid-auto-rows: 2.5rem;
   gap: 0.2rem;
   justify-content: start;
@@ -115,113 +119,81 @@ const Navigation = () => {
   return (
     <NavigationSt>
       {app.login.user !== "" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/user"
-        >
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/user">
           <UserIconLight className="sysIcon" />
           <span className="text none">User</span>
         </NavLink>
       ) : null}
       {app.login.user !== "" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/maintenance"
-        >
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/facturas">
+          <InvoiceIcon className="sysIcon" />
+          <span className="text none">Facturas</span>
+        </NavLink>
+      ) : null}
+      {app.login.user !== "" && app.login.user !== "617463e70905a5d1813e49bb" ? (
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/maintenance">
           <MaintenanceIcon className="sysIcon" />
           <span className="text none">Mantenimiento</span>
         </NavLink>
       ) : null}
       {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/add-product"
-        >
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/wifi">
+          <WifiIcon2 className="sysIcon" />
+          <span className="text none">Wi - Fi-</span>
+        </NavLink>
+      ) : null}
+      {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/add-product">
           <AddProductIcon className="sysIcon" />
           <span className="text none">Add Product</span>
         </NavLink>
       ) : null}
       {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/products"
-        >
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/products">
           <ProductsIcon className="sysIcon" />
           <span className="text none">Products</span>
         </NavLink>
       ) : null}
 
-      {app.login.user !== "" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/reports"
-        >
+      {app.login.user !== "" && app.login.user !== "617463e70905a5d1813e49bb" ? (
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/reports">
           <ReportsIcon className="sysIcon" />
           <span className="text none">Reportes</span>
         </NavLink>
       ) : null}
 
-      {app.login.user !== "" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/cash-register"
-        >
+      {app.login.user !== "" && app.login.user !== "617463e70905a5d1813e49bb" ? (
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/cash-register">
           <CloudIcon className="sysIcon" />
           <span className="text none">Caja</span>
         </NavLink>
       ) : null}
       {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/charts"
-        >
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/charts">
           <ChartsIcon className="sysIcon" />
-          <span className="text none">Charts 01</span>
+          <span className="text none">Charts Balance</span>
         </NavLink>
       ) : null}
       {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/charts02"
-        >
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/charts02">
           <ChartsIcon className="sysIcon" />
           <span className="text none">Charts 02</span>
         </NavLink>
       ) : null}
-      {app.login.user !== ""  ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/charts03"
-        >
+      {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/charts03">
           <ChartsIcon className="sysIcon" />
           <span className="text none">Ventas</span>
         </NavLink>
       ) : null}
-      {app.login.user !== "" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/servers"
-        >
+      {app.login.user !== "" && app.login.user !== "617463e70905a5d1813e49bb" ? (
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/servers">
           <ServersIcon className="sysIcon" />
           <span className="text none">Servers</span>
         </NavLink>
       ) : null}
       {app.login.user === "" ? (
-        <NavLink
-          className="navLink"
-          activeClassName="activeNavLink"
-          to="/admin/login"
-        >
+        <NavLink className="navLink" activeClassName="activeNavLink" to="/admin/login">
           <LoginIcon className="sysIcon" />
           <span className="text none">Entrar</span>
         </NavLink>

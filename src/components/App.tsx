@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 // *Redux
 // import { useSelector } from "react-redux";
 // import { showMenu } from "redux/actions/appAction";
@@ -23,6 +24,14 @@ const AppSt = styled.div`
   display: flex;
   justify-content: center;
   align-items: center; */
+  .toast {
+    width: auto;
+    height: 3rem;
+    background: #ffffff;
+    font-family: "Roboto 300";
+    font-size: 1rem;
+    user-select: none;
+  }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
   }
@@ -36,6 +45,11 @@ function App() {
   return (
     <Router>
       <AppSt id="app">
+        <Toaster
+          toastOptions={{
+            className: "toast",
+          }}
+        />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/admin" component={Admin} />

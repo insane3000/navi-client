@@ -14,6 +14,7 @@ import Charts03 from "./pages/Charts03";
 import Users from "./pages/Servers";
 import AddProducts from "./pages/AddProducts";
 import Login from "./pages/Login";
+import Facturas from "./pages/Facturas";
 import ListProducts from "./pages/ListProducts";
 import UpdateProducts from "./organisms/UpdateProduct";
 import { StoreInterface } from "interfaces/storeTemplate";
@@ -24,6 +25,10 @@ import { useEffect } from "react";
 import { loginServer } from "redux/actions/appAction";
 // import AddPc from "./organisms/AddPc";
 import ListOfPc from "./pages/ListOfPc";
+import UploadInvoice from "./pages/UploadInvoice";
+import Slider from "./pages/Slider";
+import GalleryInvoices from "./pages/GalleryInvoices";
+import Wifi from "./pages/Wifi.tsx";
 const AdminSt = styled.div`
   width: 100%;
   height: 100%;
@@ -39,17 +44,13 @@ const AdminSt = styled.div`
 `;
 
 const Admin = () => {
+  //   const history = useHistory();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
 
   useEffect(() => {
     if (localStorage.getItem("token") && localStorage.getItem("user")) {
-      dispatch(
-        loginServer(
-          `${localStorage.getItem("user")}`,
-          `${localStorage.getItem("token")}`
-        )
-      );
+      dispatch(loginServer(`${localStorage.getItem("user")}`, `${localStorage.getItem("token")}`));
     }
   }, [dispatch]);
   return (
@@ -62,15 +63,14 @@ const Admin = () => {
         {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
           <Route path="/admin/add-product/" component={AddProducts} />
         ) : null}
-        {app.login.user !== "" ? (
-          <Route path="/admin/user" component={User} />
-        ) : null}
-        {app.login.user !== "" ? (
-          <Route path="/admin/maintenance" component={ListOfPc} />
-        ) : null}
+        {app.login.user !== "" ? <Route path="/admin/user" component={User} /> : null}
+        {app.login.user !== "" ? <Route path="/admin/maintenance" component={ListOfPc} /> : null}
         {/* {app.login.user !== "" ? (
           <Route path="/admin/maintenance/:id" component={AddPc} />
         ) : null} */}
+        {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
+          <Route path="/admin/wifi" component={Wifi} />
+        ) : null}
         {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
           <Route path="/admin/products" component={ListProducts} />
         ) : null}
@@ -80,27 +80,27 @@ const Admin = () => {
         {app.login.user !== "" ? (
           <Route path="/admin/cash-register" component={CashRegister} />
         ) : null}
+        {app.login.user !== "" ? <Route path="/admin/facturas" component={Facturas} /> : null}
         {app.login.user !== "" ? (
-          <Route path="/admin/reports" component={Reports} />
+          <Route path="/admin/gallery/:id" component={GalleryInvoices} />
         ) : null}
+        {app.login.user !== "" ? <Route path="/admin/slider" component={Slider} /> : null}
+        {app.login.user !== "" ? (
+          <Route path="/admin/upload-invoice" component={UploadInvoice} />
+        ) : null}
+        {app.login.user !== "" ? <Route path="/admin/reports" component={Reports} /> : null}
         {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
           <Route path="/admin/charts/" component={Charts} />
         ) : null}
         {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
           <Route path="/admin/charts02/" component={Charts02} />
         ) : null}
-        {app.login.user !== "" ? (
-          <Route path="/admin/charts03/" component={Charts03} />
-        ) : null}
-        {app.login.user !== "" ? (
-          <Route path="/admin/servers/" component={Users} />
-        ) : null}
+        {app.login.user !== "" ? <Route path="/admin/charts03/" component={Charts03} /> : null}
+        {app.login.user !== "" ? <Route path="/admin/servers/" component={Users} /> : null}
         {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
           <Route path="/admin/check/:id" component={Check} />
         ) : null}
-        {app.login.user !== "" ? (
-          <Route path="/admin/watch/:id" component={Watch} />
-        ) : null}
+        {app.login.user !== "" ? <Route path="/admin/watch/:id" component={Watch} /> : null}
         <Route component={Error404} />
       </Switch>
     </AdminSt>

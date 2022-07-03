@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
+import toast from "react-hot-toast";
 // *Redux
 // import { useSelector } from "react-redux";
 // import { showMenu } from "redux/actions/appAction";
@@ -15,11 +16,13 @@ import {
 // import BackupIcon from "icons/BackupIcon";
 import axios from "axios";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import CashRegister from "../pages/CashRegister";
 // *Axios
 import { URI } from "config/axios";
 import Spinner from "./Spinner";
+import { loginServer } from "redux/actions/appAction";
+import { useHistory } from "react-router-dom";
 const CashRegisterMainSt = styled.div`
   width: 100%;
   height: 100%;
@@ -511,6 +514,8 @@ const ExpensesSt = styled.div`
 `;
 
 const CashRegisterMain = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
   // console.log(app);
   const today = new Date();
@@ -522,6 +527,8 @@ const CashRegisterMain = () => {
   };
 
   const [state, setState] = useState<CashRegisterIT>(cashRegisterTemplate);
+  //!Spinner
+  const [spinner, setSpinner] = useState(true);
   // console.log(state);
   // !Calculamos las ventas y el dinero de las ventas
   state.sales.map((i) => {
@@ -533,25 +540,16 @@ const CashRegisterMain = () => {
 
   // !Sacamos el resultado de las ventas totales
   if (state.sales.length > 0) {
-    state.dashboard.totalSales = state.sales
-      .map((i) => i.cash)
-      .reduce((i, c) => i + c);
+    state.dashboard.totalSales = state.sales.map((i) => i.cash).reduce((i, c) => i + c);
   }
   // !Sacamos el resultado de los gastos totales
-  state.dashboard.totalExpenses = state.expenses
-    .map((i) => i.expense)
-    .reduce((i, c) => i + c);
+  state.dashboard.totalExpenses = state.expenses.map((i) => i.expense).reduce((i, c) => i + c);
   // !Sacamos el Total balance
   state.dashboard.balance =
     state.dashboard.totalCash -
-    (state.dashboard.totalSales +
-      state.dashboard.pancafe -
-      state.dashboard.totalExpenses);
+    (state.dashboard.totalSales + state.dashboard.pancafe - state.dashboard.totalExpenses);
   // !Function for get values and set on state
-  const handleChangeSales = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    identifier: string
-  ) => {
+  const handleChangeSales = (e: React.ChangeEvent<HTMLInputElement>, identifier: string) => {
     const name = e.target.name;
     const value = e.target.value;
     setState({
@@ -564,10 +562,7 @@ const CashRegisterMain = () => {
       }),
     });
   };
-  const handleChangeExpenses = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    identifier: string
-  ) => {
+  const handleChangeExpenses = (e: React.ChangeEvent<HTMLInputElement>, identifier: string) => {
     const name = e.target.name;
     const value = e.target.value;
     const type = e.target.type;
@@ -576,17 +571,14 @@ const CashRegisterMain = () => {
       ...state,
       expenses: state.expenses.map((i) => {
         if (i.name === identifier) {
-          i[name] =
-            type === "text" ? value : value === "" ? 0 : parseFloat(value);
+          i[name] = type === "text" ? value : value === "" ? 0 : parseFloat(value);
         }
         return i;
       }),
     });
   };
   const handleChangeDashboard = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
     identifier: string
   ) => {
     const value = e.target.value;
@@ -596,14 +588,14 @@ const CashRegisterMain = () => {
       ...state,
       dashboard: {
         ...state.dashboard,
-        [identifier]:
-          type === "select-one" ? value : value === "" ? 0 : parseFloat(value),
+        [identifier]: type === "select-one" ? value : value === "" ? 0 : parseFloat(value),
       },
     });
   };
 
   // !Function submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setSpinner(true);
     e.preventDefault();
     state.date = new Date().toISOString();
     // state.user = app.login.user;
@@ -613,11 +605,14 @@ const CashRegisterMain = () => {
           authorization: `Bearer ${app.login.token}`,
         },
       })
-      .then(function () {
+      .then(function (res) {
         fetchProducts();
+        res.data && toast.success("Guardado.");
+        setSpinner(false);
       })
       .catch(function (error) {
         console.log(error);
+        toast.error("Error, server caido.");
       });
   };
   const cashRegisterReset = {
@@ -756,6 +751,7 @@ const CashRegisterMain = () => {
 
   // !Set state whit data from redux
   const fetchProducts = useCallback(async () => {
+    setSpinner(true);
     const fetchData = async (id: string) => {
       await axios
         .get(`${URI}/cash-register/${id}`, {
@@ -769,10 +765,7 @@ const CashRegisterMain = () => {
           if (response.data) {
             letSales = letSales.map((i: any) => {
               if (response.data.sales.find((e: any) => e.name === i.name)) {
-                if (
-                  response.data.sales.find((e: any) => e.name === i.name)
-                    .name === i.name
-                ) {
+                if (response.data.sales.find((e: any) => e.name === i.name).name === i.name) {
                   i.previousServer = response.data.sales.find(
                     (e: any) => e.name === i.name
                   ).currentServer;
@@ -805,9 +798,14 @@ const CashRegisterMain = () => {
       })
       .then(function (response: any) {
         letSales = response.data;
+        setSpinner(false);
       })
       .catch(function (error) {
         console.log(error);
+        dispatch(loginServer("", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        history.push(`/admin/login`);
       });
     // ! Ogteniendo id del anterior registro
     await axios
@@ -828,6 +826,8 @@ const CashRegisterMain = () => {
     cashRegisterReset.dashboard,
     cashRegisterReset.expenses,
     app.login.token,
+    dispatch,
+    history,
   ]);
 
   useEffect(() => {
@@ -863,9 +863,7 @@ const CashRegisterMain = () => {
         </section>
         <section className="cellDashboard">
           <span className="cellDashboardTitle">ventas totales</span>
-          <section className="cellDashboardInput">
-            {state.dashboard.totalSales}
-          </section>
+          <section className="cellDashboardInput">{state.dashboard.totalSales}</section>
         </section>
         <section className="cellDashboard">
           <span className="cellDashboardTitle">gastos totales</span>
@@ -896,9 +894,7 @@ const CashRegisterMain = () => {
             onFocus={(e) => e.target.select()}
             required
             name="totalCash"
-            value={
-              state.dashboard.totalCash === 0 ? "" : state.dashboard.totalCash
-            }
+            value={state.dashboard.totalCash === 0 ? "" : state.dashboard.totalCash}
             onChange={(e) => handleChangeDashboard(e, e.target.name)}
             step="0.1"
           />
@@ -907,9 +903,7 @@ const CashRegisterMain = () => {
           <span className="cellDashboardTitle">balance</span>
           <section
             className="cellDashboardInput"
-            style={
-              state.dashboard.balance < 0 ? { color: "red" } : { color: "lime" }
-            }
+            style={state.dashboard.balance < 0 ? { color: "red" } : { color: "lime" }}
           >
             {state.dashboard.balance.toFixed(2)}
           </section>
@@ -921,8 +915,7 @@ const CashRegisterMain = () => {
             className="cellDashboardInput button"
             type="submit"
             style={
-              state.dashboard.server === "ninguno" ||
-              state.dashboard.totalCash === 0
+              state.dashboard.server === "ninguno" || state.dashboard.totalCash === 0
                 ? {
                     cursor: "not-allowed",
                     background: "#0c0b0b",
@@ -957,9 +950,7 @@ const CashRegisterMain = () => {
             <div className="tRow" key={i.name}>
               <section className="cell text">{i.name}</section>
               <section className="cell">{i.price === 0 ? "" : i.price}</section>
-              <section className="cell">
-                {i.previousServer === 0 ? "" : i.previousServer}
-              </section>
+              <section className="cell">{i.previousServer === 0 ? "" : i.previousServer}</section>
               <input
                 className="cell number"
                 type="number"
@@ -983,18 +974,13 @@ const CashRegisterMain = () => {
                 tabIndex={2}
                 // placeholder="0"
               />
-              <section
-                className="cell"
-                style={i.sales < 0 ? { color: "red" } : { color: "lime" }}
-              >
+              <section className="cell" style={i.sales < 0 ? { color: "red" } : { color: "lime" }}>
                 {i.sales === 0 ? "" : i.sales}
               </section>
               {/* <section className="cell none">
                 {i.profit === 0 ? "" : i.profit.toFixed(2)}
               </section> */}
-              <section className="cell none">
-                {i.cash === 0 ? "" : i.cash}
-              </section>
+              <section className="cell none">{i.cash === 0 ? "" : i.cash}</section>
             </div>
           ))}
         </SalesSt>
@@ -1043,8 +1029,8 @@ const CashRegisterMain = () => {
             </div>
           ))}
         </ExpensesSt>
-        {state.sales.length === 1 ? <Spinner /> : null}
       </div>
+      {spinner && <Spinner />}
     </CashRegisterMainSt>
   );
 };

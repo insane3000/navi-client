@@ -227,8 +227,13 @@ const AddProducts = () => {
         dispatch(loginServer(response.data._id, response.data.token));
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", response.data._id);
-        history.push(`admin/cash-register`);
-        // console.log(response.data)
+
+        // console.log(response.data._id);
+        if (response.data._id === "617463e70905a5d1813e49bb") {
+          history.push(`/admin/facturas`);
+        } else {
+          history.push(`/admin/cash-register`);
+        }
       })
       .catch(function (error) {
         // console.log(error);
@@ -239,7 +244,11 @@ const AddProducts = () => {
   };
   useEffect(() => {
     if (localStorage.getItem("token") && localStorage.getItem("token") !== "") {
-      history.push(`/admin/cash-register`);
+      if (localStorage.getItem("user") === "617463e70905a5d1813e49bb") {
+        history.push(`/admin/facturas`);
+      } else {
+        history.push(`/admin/cash-register`);
+      }
     }
   });
   return (

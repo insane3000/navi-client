@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.1ba2dc8d.chunk.css",
-    "main.js": "/static/js/main.c6f7fb49.chunk.js",
-    "main.js.map": "/static/js/main.c6f7fb49.chunk.js.map",
+    "main.js": "/static/js/main.44279887.chunk.js",
+    "main.js.map": "/static/js/main.44279887.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.2fad60c8.js",
     "runtime-main.js.map": "/static/js/runtime-main.2fad60c8.js.map",
-    "static/js/2.8df90ddb.chunk.js": "/static/js/2.8df90ddb.chunk.js",
-    "static/js/2.8df90ddb.chunk.js.map": "/static/js/2.8df90ddb.chunk.js.map",
+    "static/js/2.80dfac30.chunk.js": "/static/js/2.80dfac30.chunk.js",
+    "static/js/2.80dfac30.chunk.js.map": "/static/js/2.80dfac30.chunk.js.map",
     "index.html": "/index.html",
     "service-worker.js": "/service-worker.js",
     "service-worker.js.map": "/service-worker.js.map",
     "static/css/main.1ba2dc8d.chunk.css.map": "/static/css/main.1ba2dc8d.chunk.css.map",
-    "static/js/2.8df90ddb.chunk.js.LICENSE.txt": "/static/js/2.8df90ddb.chunk.js.LICENSE.txt",
+    "static/js/2.80dfac30.chunk.js.LICENSE.txt": "/static/js/2.80dfac30.chunk.js.LICENSE.txt",
     "static/media/angel.679b0119.jpg": "/static/media/angel.679b0119.jpg",
     "static/media/aorus-mouse.73e046ba.jpg": "/static/media/aorus-mouse.73e046ba.jpg",
     "static/media/apex.afef1be9.jpg": "/static/media/apex.afef1be9.jpg",
@@ -21,6 +21,9 @@
     "static/media/dota.984e0bdf.jpg": "/static/media/dota.984e0bdf.jpg",
     "static/media/fortnite.38e5176d.jpg": "/static/media/fortnite.38e5176d.jpg",
     "static/media/fortnite.c99242dc.jpg": "/static/media/fortnite.c99242dc.jpg",
+    "static/media/imgMobile1.199a4d70.webp": "/static/media/imgMobile1.199a4d70.webp",
+    "static/media/imgMobile2.0610c012.webp": "/static/media/imgMobile2.0610c012.webp",
+    "static/media/imgMobile3.7a7fb3a2.webp": "/static/media/imgMobile3.7a7fb3a2.webp",
     "static/media/keepCalm.8aaec555.jpeg": "/static/media/keepCalm.8aaec555.jpeg",
     "static/media/logo-navi.8417c4ad.png": "/static/media/logo-navi.8417c4ad.png",
     "static/media/lol.ee5407fd.jpg": "/static/media/lol.ee5407fd.jpg",
@@ -37,8 +40,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.2fad60c8.js",
-    "static/js/2.8df90ddb.chunk.js",
+    "static/js/2.80dfac30.chunk.js",
     "static/css/main.1ba2dc8d.chunk.css",
-    "static/js/main.c6f7fb49.chunk.js"
+    "static/js/main.44279887.chunk.js"
   ]
 }

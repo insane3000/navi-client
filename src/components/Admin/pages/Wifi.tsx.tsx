@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { useHistory } from "react-router-dom";
@@ -12,7 +11,7 @@ import { URI } from "config/axios";
 import Spinner from "./Spinner";
 import { loginServer } from "redux/actions/appAction";
 
-const EditPcSt = styled.form`
+const WifiSt = styled.form`
   width: 100%;
   height: 100%;
   display: flex;
@@ -38,7 +37,7 @@ const EditPcSt = styled.form`
   .titleAddProducts {
     font-family: "Roboto 900";
     font-size: 2rem;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     margin-bottom: 1rem;
   }
   .containerPc {
@@ -133,7 +132,7 @@ const EditPcSt = styled.form`
     .titleAddProducts {
       font-family: "Roboto 900";
       font-size: 3rem;
-      text-transform: uppercase;
+      /* text-transform: uppercase; */
       margin-bottom: 1rem;
     }
     .containerPc {
@@ -205,33 +204,16 @@ const EditPcSt = styled.form`
     }
   }
 `;
-interface UserIT {
-  [key: string]: string | number;
-  _id: string;
-  user: string;
-  oldPassword: string;
-  newPassword: string;
-  confirmation: string;
-}
-const userTemplate = {
-  _id: "",
-  user: "",
-  oldPassword: "",
-  newPassword: "",
-  confirmation: "",
-};
-interface Params {
-  id: string;
-}
-const EditPc = () => {
-  const dispatch = useDispatch();
 
+const Wifi = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const params = useParams<Params>();
   const app = useSelector((store: StoreInterface) => store.app);
-  const [state, setState] = useState<UserIT>(userTemplate);
+  const [state, setState] = useState({
+    network: "",
+    password: "",
+  });
   const [spinner, setSpinner] = useState(false);
-  const [errorUser, setErrorUser] = useState(false);
 
   // !Handle Change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -244,21 +226,9 @@ const EditPc = () => {
   };
   const fetchData = async () => {
     axios
-      .get(`${URI}/profile/${app.login.user}`, {
-        headers: {
-          authorization: `Bearer ${app.login.token}`,
-        },
-      })
+      .get(`${URI}/wifi/62c218bd4061ad809808d0b3`)
       .then(function (response: any) {
-        setState({
-          ...state,
-          user: response.data.user,
-          _id: response.data._id,
-          oldPassword: "",
-          newPassword: "",
-          confirmation: "",
-        });
-        // console.log(response.data);
+        setState(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -272,119 +242,62 @@ const EditPc = () => {
     setSpinner(true);
     e.preventDefault();
     await axios
-      .put(`${URI}/profile/${params.id}`, state, {
+      .put(`${URI}/wifi/62c218bd4061ad809808d0b3`, state, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
       })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          // setState(userTemplate);
-          fetchData();
-        }
+      .then((response: any) => {
+        response.status === 200 && setSpinner(false);
+        setState(response.data);
+      })
+      .catch(function (error) {
+        setSpinner(false);
         localStorage.setItem("token", "");
         localStorage.setItem("user", "");
         dispatch(loginServer("", ""));
         history.push(`/admin/login`);
-      })
-      .catch(function (error) {
-        setSpinner(false);
-        error.response.status === 400 ? setErrorUser(true) : console.log(error);
       });
-    // history.push(`/admin/maintenance`);
   };
   return (
-    <EditPcSt onSubmit={handleSubmit}>
-      <h2 className="titleAddProducts">{state.user}</h2>
+    <WifiSt onSubmit={handleSubmit}>
+      <h2 className="titleAddProducts">Wi - Fi</h2>
       <div className="containerPc">
         <section className="cell">
-          <span className="subtitle">Usuario:</span>
+          <span className="subtitle">Red:</span>
           <input
             className="inputValue"
             type="text"
-            name="user"
-            // placeholder="Nombre."
+            name="network"
             onChange={handleChange}
-            value={state.user}
-            onFocus={(e) => e.target.select()}
+            value={state.network}
+            required
             readOnly
             style={{
               cursor: "not-allowed",
-              // userSelect: "none",
-              // msUserSelect: "none",
             }}
-            //required
           />
         </section>
         <section className="cell">
-          <span className="subtitle">Contraseña antigua:</span>
+          <span className="subtitle">Contraseña:</span>
           <input
             className="inputValue"
-            type="password"
-            name="oldPassword"
-            // placeholder="Contraseña antigua."
+            type="text"
+            name="password"
             onChange={handleChange}
-            value={state.oldPassword}
-            onFocus={(e) => e.target.select()}
-            minLength={4}
+            value={state.password}
             required
-          />
-        </section>
-        <section className="cell">
-          <span className="subtitle">Contraseña nueva:</span>
-          <input
-            className="inputValue"
-            type="password"
-            name="newPassword"
-            // placeholder="Contraseña."
-            onChange={handleChange}
-            value={state.newPassword}
-            onFocus={(e) => e.target.select()}
-            minLength={4}
-            required
-            style={
-              state.newPassword.length === 0
-                ? { border: "0.0625rem solid #5100ff" }
-                : state.newPassword === state.confirmation
-                ? { border: "0.0625rem solid lime" }
-                : { border: "0.0625rem solid red" }
-            }
-          />
-        </section>
-        <section className="cell">
-          <span className="subtitle">Repite la contraseña:</span>
-          <input
-            className="inputValue"
-            type="password"
-            name="confirmation"
-            // placeholder="Repite la contraseña."
-            onChange={handleChange}
-            value={state.confirmation}
-            onFocus={(e) => e.target.select()}
-            minLength={4}
-            required
-            style={
-              state.newPassword.length === 0
-                ? { border: "0.0625rem solid #5100ff" }
-                : state.newPassword === state.confirmation
-                ? { border: "0.0625rem solid lime" }
-                : { border: "0.0625rem solid red" }
-            }
           />
         </section>
       </div>
-      {errorUser && <span className="alert">La antigua contraseña es inválida.</span>}
-      {state.newPassword.length < 4 ? (
-        <span className="alert">La contraseña debe tener minimo 4 caracteres.</span>
-      ) : null}
+
       <button className="btnSubmit" type="submit">
         Guardar
       </button>
 
       {spinner && <Spinner />}
-    </EditPcSt>
+    </WifiSt>
   );
 };
 
-export default EditPc;
+export default Wifi;

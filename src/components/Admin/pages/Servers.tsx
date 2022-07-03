@@ -469,15 +469,11 @@ const Users = () => {
   const [nameState, setNameState] = useState("ninguno");
 
   const [initialDate, setInitialDate] = useState(
-    `${new Date(Date.now() - 1000 * 60 * 60 * 4)
-      .toISOString()
-      .substring(0, 11)}00:00`
+    `${new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString().substring(0, 11)}00:00`
   );
 
   const [endingDate, setEndingDate] = useState(
-    `${new Date(Date.now() - 1000 * 60 * 60 * 4)
-      .toISOString()
-      .substring(0, 11)}23:59`
+    `${new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString().substring(0, 11)}23:59`
   );
   let filtered = state?.filter(
     (i) =>
@@ -486,21 +482,13 @@ const Users = () => {
   );
   let balance = filtered.filter((i) => i.dashboard.server === nameState);
   let totalBalance =
-    balance.length > 0
-      ? balance.map((i) => i.dashboard.balance).reduce((i, c) => i + c)
-      : 0;
+    balance.length > 0 ? balance.map((i) => i.dashboard.balance).reduce((i, c) => i + c) : 0;
   let filteredValidation =
-    filtered.map((i) => i.expenses.find((e) => e.name === nameState)?.expense)
-      .length === 0
+    filtered.map((i) => i.expenses.find((e) => e.name === nameState)?.expense).length === 0
       ? [0]
-      : filtered.map(
-          (i) => i.expenses.find((e) => e.name === nameState)?.expense
-        );
+      : filtered.map((i) => i.expenses.find((e) => e.name === nameState)?.expense);
 
-  let totalExpense =
-    nameState === "ninguno"
-      ? 0
-      : filteredValidation.reduce((i: any, c) => i + c);
+  let totalExpense = nameState === "ninguno" ? 0 : filteredValidation.reduce((i: any, c) => i + c);
 
   const handleChangeName = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setNameState(e.target.value);
@@ -514,13 +502,14 @@ const Users = () => {
 
   const fetchData = () => {
     axios
-      .get(`${URI}/cash-register`, {
+      .get(`${URI}/servers`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
       })
       .then(function (response: any) {
-        setState(response.data);
+        setState(response.data.docs);
+        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -541,19 +530,14 @@ const Users = () => {
     minute: "2-digit",
     second: "2-digit",
   };
-
+  const year = new Date().getFullYear();
   return (
     <UsersSt>
       <DashboardSt>
         <section className="cellDashboard">
           <span className="cellDashboardTitle">Gestion</span>
-          <select
-            className="cellDashboardInput select"
-            name="server"
-            onChange={handleChangeName}
-          >
-            <option value="2021">2021</option>
-            {/* <option value="2020">2020</option> */}
+          <select className="cellDashboardInput select" name="server" onChange={handleChangeName}>
+            <option value={year}>{year}</option>
           </select>
         </section>
 
@@ -582,11 +566,7 @@ const Users = () => {
         </section>
         <section className="cellDashboard">
           <span className="cellDashboardTitle">Server</span>
-          <select
-            className="cellDashboardInput select"
-            name="server"
-            onChange={handleChangeName}
-          >
+          <select className="cellDashboardInput select" name="server" onChange={handleChangeName}>
             <option value="ninguno">ninguno</option>
             <option value="drako">drako</option>
             <option value="jhasmy">jhasmy</option>
@@ -596,9 +576,7 @@ const Users = () => {
         </section>
         <section className="cellDashboard none">
           <span className="cellDashboardTitle">Balance</span>
-          <span className="cellDashboardInput number ">
-            {(totalBalance * -1).toFixed(2)}
-          </span>
+          <span className="cellDashboardInput number ">{(totalBalance * -1).toFixed(2)}</span>
         </section>
 
         <section className="cellDashboard none">

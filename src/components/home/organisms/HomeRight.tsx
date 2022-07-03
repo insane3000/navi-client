@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 // *Components
 import HomeIntro from "components/home/molecules/HomeIntro";
+import HomeMovies from "components/home/molecules/HomeMovies";
 import HomePoints from "components/home/molecules/HomePoints";
 import HomeTitleComponent from "components/home/atoms/HomeTitleComponent";
 import HomeLocation from "components/home/molecules/HomeLocation";
@@ -22,9 +23,18 @@ const HomePage = () => {
     <HomePageSt>
       <HomeIntro />
       <HomeTitleComponent
+        id="#movies"
+        title="CONTENIDO MULTIMEDIA!"
+        bgTitle="#ff0040"
+        color="white"
+        line01="Gracias a Movie Store Cbba..."
+        line02="Todos los clientes de Navi Games Cbba, tienen acceso gratuito e ilimitado."
+      />
+      <HomeMovies />
+      <HomeTitleComponent
         id="#points"
         title="CANJEA TUS PUNTOS!"
-        bgTitle="#ff0040"
+        bgTitle="#5900ff"
         color="white"
         line01="Por cada carga de 20Bs, el sistema te regala 4 puntos."
         line02="Esos puntos los puedes cambiar por crédito para seguir jugando o tambien los puedes cambiar por premios!"

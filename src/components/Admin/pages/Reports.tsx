@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
-// *Interface
-import { CashRegisterIT } from "interfaces/Cashregister";
 // import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 //* Redux
@@ -20,6 +18,8 @@ const ReportsSt = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+
   .table {
     width: 100%;
     height: 100%;
@@ -113,12 +113,24 @@ const ReportsSt = styled.div`
       top: 0;
       background: #0c0c0c;
     }
+    .load-more {
+      background: #141414;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Roboto 300";
+      font-size: 0.8rem;
+      color: white;
+      cursor: pointer;
+      border-radius: 0.3rem;
+    }
   }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 100%;
     position: relative;
+    background: red;
     .table {
       width: 100%;
       height: 100%;
@@ -210,6 +222,17 @@ const ReportsSt = styled.div`
         top: 0;
         left: 0;
         background: #0c0c0c;
+      }
+
+      .load-more {
+        background: #141414;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Roboto 300";
+        color: white;
+        cursor: pointer;
+        border-radius: 0.3rem;
       }
     }
   }
@@ -311,26 +334,21 @@ const WarningSt = styled.div`
     }
   }
 `;
-type StateIT = [CashRegisterIT];
 const Reports = () => {
   const history = useHistory();
   const app = useSelector((store: StoreInterface) => store.app);
-
-  const [state, setState] = useState<StateIT>();
+  const [page, setPage] = useState(1);
+  const [state, setState] = useState<any>();
   const [deleteId, setDeleteId] = useState("");
   const [modal, setModal] = useState(false);
-  // console.log(deleteId);
-  // console.log(state);
+  //!Spinner
+  const [spinner, setSpinner] = useState(true);
 
   state?.sort(function (a: any, b: any) {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
-  // console.log(sort);
   // !Modal Function
-  const handleModal = (
-    e: React.MouseEvent<HTMLElement, MouseEvent>,
-    id: any
-  ) => {
+  const handleModal = (e: React.MouseEvent<HTMLElement, MouseEvent>, id: any) => {
     setDeleteId(id);
     setModal(!modal);
   };
@@ -348,15 +366,35 @@ const Reports = () => {
       });
   };
 
-  const fetchData = () => {
-    axios
-      .get(`${URI}/reports`, {
+  const fetchData = async () => {
+    setSpinner(true);
+    await axios
+      .get(`${URI}/reports?page=${page}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
       })
       .then(function (response: any) {
-        setState(response.data);
+        setState(response.data.docs);
+        setSpinner(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+        history.push(`/admin/login`);
+      });
+  };
+  // !Fetch2
+  const fetchData2 = async (localPage: any) => {
+    await axios
+      .get(`${URI}/reports?page=${localPage}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
+      .then(function (response: any) {
+        setState((prev: any) => [...prev, ...response.data.docs]);
+        setPage(response.data.page);
+        setSpinner(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -402,15 +440,11 @@ const Reports = () => {
           </section>
         </div>
 
-        {state?.map((i) => (
+        {state?.map((i: any) => (
           <div className="tRow" key={i._id}>
             <section
               className="cell"
-              style={
-                i.createdAt !== i.updatedAt
-                  ? { color: "#00ffaa" }
-                  : { color: "#ffffff" }
-              }
+              style={i.createdAt !== i.updatedAt ? { color: "#00ffaa" } : { color: "#ffffff" }}
               title={new Date(i.updatedAt).toLocaleDateString("es-ES", options)}
             >
               {new Date(i.date).toLocaleDateString("es-ES", options)}
@@ -418,9 +452,7 @@ const Reports = () => {
 
             <section className="cell">{i.dashboard.server}</section>
             <section className="cell none">{i.dashboard.totalSales}</section>
-            <section className="cell ">
-              {i.dashboard.totalExpenses.toFixed(2)}
-            </section>
+            <section className="cell ">{i.dashboard.totalExpenses.toFixed(2)}</section>
             <section className="cell none">{i.dashboard.pancafe}</section>
             <section className="cell " style={{ color: "#00ffaa" }}>
               {i.dashboard.totalCash}
@@ -439,7 +471,7 @@ const Reports = () => {
                 <span
                   style={{
                     color: "orange",
-                    fontFamily: "#ff9d00"
+                    fontFamily: "#ff9d00",
                   }}
                 >
                   Perfect !
@@ -462,10 +494,7 @@ const Reports = () => {
             )}
 
             {app.login.user === "6168d53fe7c7ac0c748c1332" ? (
-              <section
-                className="cell head action"
-                onClick={(e) => handleModal(e, i._id)}
-              >
+              <section className="cell head action" onClick={(e) => handleModal(e, i._id)}>
                 <DeleteIcon className="sysIcon" />
                 <span className="text noneText">Borrar</span>
               </section>
@@ -474,6 +503,9 @@ const Reports = () => {
             )}
           </div>
         ))}
+        <div className="tRow load-more" onClick={() => fetchData2(page + 1)}>
+          Cargar mas.
+        </div>
       </div>
       {modal && (
         <WarningSt>
@@ -490,7 +522,7 @@ const Reports = () => {
           </div>
         </WarningSt>
       )}
-      {!state && <Spinner />}
+      {spinner && <Spinner />}
     </ReportsSt>
   );
 };

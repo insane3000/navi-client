@@ -3,7 +3,7 @@ const SpinnerSt = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  background: #0c0c0c;
+  background: #ff0000;
   display: flex;
   justify-content: center;
   align-items: center;
