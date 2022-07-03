@@ -226,7 +226,7 @@ const Wifi = () => {
   };
   const fetchData = async () => {
     axios
-      .get(`${URI}/wifi/62c218bd4061ad809808d0b3`)
+      .get(`${URI}/wifi/62c22119fdee23ecb1982e79`)
       .then(function (response: any) {
         setState(response.data);
       })
@@ -242,7 +242,7 @@ const Wifi = () => {
     setSpinner(true);
     e.preventDefault();
     await axios
-      .put(`${URI}/wifi/62c218bd4061ad809808d0b3`, state, {
+      .put(`${URI}/wifi/62c22119fdee23ecb1982e79`, state, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },

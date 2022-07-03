@@ -117,7 +117,7 @@ const Menu = () => {
   });
   const fetchData = async () => {
     axios
-      .get(`${URI}/wifi/62c218bd4061ad809808d0b3`, {
+      .get(`${URI}/wifi/62c22119fdee23ecb1982e79`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
@@ -132,8 +132,6 @@ const Menu = () => {
   useEffect(() => {
     fetchData(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app.login.user, app.login.token]);
-
-
 
   return (
     <MenuSt>
