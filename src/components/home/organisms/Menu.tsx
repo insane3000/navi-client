@@ -117,11 +117,7 @@ const Menu = () => {
   });
   const fetchData = async () => {
     axios
-      .get(`${URI}/wifi/62c22119fdee23ecb1982e79`, {
-        headers: {
-          authorization: `Bearer ${app.login.token}`,
-        },
-      })
+      .get(`${URI}/wifi/62c22119fdee23ecb1982e79`)
       .then(function (response: any) {
         setState(response.data);
       })
