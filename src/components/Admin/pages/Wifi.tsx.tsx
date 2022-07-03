@@ -236,7 +236,7 @@ const Wifi = () => {
   };
   useEffect(() => {
     fetchData(); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [app.login.user, app.login.token]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setSpinner(true);

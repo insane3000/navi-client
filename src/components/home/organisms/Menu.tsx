@@ -110,7 +110,6 @@ const MenuSt = styled.div`
 `;
 const Menu = () => {
   const date = new Date().getFullYear();
-  const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState({
     network: "",
     password: "",
@@ -127,7 +126,7 @@ const Menu = () => {
   };
   useEffect(() => {
     fetchData(); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [app.login.user, app.login.token]);
+  }, []);
 
   return (
     <MenuSt>
